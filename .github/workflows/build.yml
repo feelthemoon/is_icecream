@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths-ignore:
       - "**.md"
       - "**.spec.js"
@@ -32,10 +32,10 @@ jobs:
           node-version: 14
 
       - name: Install Dependencies
-        run: npm install
+        run: yarn install
 
       - name: Build Release Files
-        run: npm run build
+        run: yarn build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
