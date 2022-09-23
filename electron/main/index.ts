@@ -17,7 +17,7 @@ process.env.PUBLIC = app.isPackaged
 import { release } from "os";
 import { join } from "path";
 
-import { app, BrowserWindow, shell, ipcMain } from "electron";
+import { app, BrowserWindow, shell, ipcMain, screen } from "electron";
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith("6.1")) app.disableHardwareAcceleration();
@@ -42,9 +42,15 @@ const url = process.env.VITE_DEV_SERVER_URL as string;
 const indexHtml = join(process.env.DIST, "index.html");
 
 async function createWindow() {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
   win = new BrowserWindow({
     title: "Main window",
     icon: join(process.env.PUBLIC, "favicon.ico"),
+    minWidth: 800,
+    minHeight: 600,
+    width,
+    height,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -59,8 +65,8 @@ async function createWindow() {
     win.loadFile(indexHtml);
   } else {
     win.loadURL(url);
-    // Open devTool if the app is not packaged
     win.webContents.openDevTools();
+    // Open devTool if the app is not packaged
   }
 
   // Test actively push message to the Electron-Renderer
