@@ -2,10 +2,12 @@ import { rmSync } from "fs";
 import { fileURLToPath, URL } from "node:url";
 import path from "path";
 
+import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import vue from "@vitejs/plugin-vue";
 import ElementPlus from "unplugin-element-plus/vite";
 import { defineConfig } from "vite";
 import electron, { onstart } from "vite-plugin-electron";
+import WindiCSS from "vite-plugin-windicss";
 
 import pkg from "./package.json";
 
@@ -41,11 +43,13 @@ export default defineConfig({
           },
         },
       },
-      // Enables use of Node.js API in the Renderer-process
-      // https://github.com/electron-vite/vite-plugin-electron/tree/main/packages/electron-renderer#electron-renderervite-serve
       renderer: {},
     }),
     ElementPlus(),
+    WindiCSS(),
+    vueI18n({
+      include: path.resolve(__dirname, "./src/langs/*"),
+    }),
   ],
   resolve: {
     alias: {

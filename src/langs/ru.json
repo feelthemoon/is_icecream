@@ -1,0 +1,35 @@
+{
+  "placeholders": {
+    "signin": {
+      "email": "Введите свой email",
+      "password": "Введите свой пароль"
+    },
+    "signup": {
+      "email": "Введите свой email",
+      "password": "Придумайте пароль",
+      "name": "Введите свое имя"
+    }
+  },
+  "pages": {
+    "signin": {
+      "form": {
+        "buttonText": "Войти",
+        "linkRecoverText": "Забыли пароль?"
+      },
+      "title": "Войти в свой аккаунт",
+      "linkTitle": "Нет аккаунта?"
+    },
+    "signup": {
+      "form": {
+        "buttonText": "Зарегистрироваться"
+      },
+      "title": "Создать новый аккаунт",
+      "linkTitle": "Уже есть аккаунт?"
+    }
+  },
+  "validation": {
+    "invalid_email": "Некорректный email",
+    "required_field": "Это поле обязательно",
+    "min_length": "Минимальная длина {field} - {length} символов"
+  }
+}
