@@ -1,22 +1,27 @@
 <template>
   <el-form
-    ref="ruleFormRef"
     status-icon
     class="flex flex-col items-center"
-    :model="ruleForm"
-    :rules="rules"
-    @submit.prevent="submitForm(ruleFormRef)"
+    :model="formData"
+    @submit.prevent="submitForm"
+    novalidate
   >
-    <el-form-item class="min-w-420px !mb-5" prop="email">
+    <el-form-item
+      class="min-w-420px !mb-5"
+      :error="invalidEmail || apiErrors[0]?.message"
+    >
       <el-input
-        v-model.trim="ruleForm.email"
+        v-model.trim="formData.email"
         type="email"
         :placeholder="t('placeholders.signin.email')"
       />
     </el-form-item>
-    <el-form-item class="min-w-420px !mb-2" prop="password">
+    <el-form-item
+      class="min-w-420px !mb-2"
+      :error="invalidPassword || apiErrors[0]?.message"
+    >
       <el-input
-        v-model.trim="ruleForm.password"
+        v-model.trim="formData.password"
         type="password"
         :placeholder="t('placeholders.signin.password')"
       />
@@ -29,7 +34,7 @@
       >
     </el-form-item>
     <el-form-item class="!mb-0">
-      <el-button type="primary" native-type="submit">{{
+      <el-button :loading="loading" type="primary" native-type="submit">{{
         t("pages.signin.form.buttonText")
       }}</el-button>
     </el-form-item>
@@ -37,45 +42,52 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { computed, reactive } from "vue";
 
 import { ElInput, ElButton, ElForm, ElFormItem } from "element-plus";
-import type { FormInstance, FormRules } from "element-plus";
 import { useI18n } from "vue-i18n";
 
-import { log } from "@/utils";
+import { useAuth, useRootStore } from "@/stores";
+import { useForm } from "@/utils/hooks";
 
 const { t } = useI18n();
+const { signin } = useAuth();
+const rootStore = useRootStore();
 
-const ruleFormRef = ref<FormInstance>();
-const ruleForm = reactive({
+const formData = reactive({
   email: "",
   password: "",
 });
 
-const rules = reactive<FormRules>({
-  email: [
-    {
-      required: true,
-      message: t("validation.invalid_email"),
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: t("validation.required_field"),
-    },
-  ],
-});
+const { v$, createValidationMessage } = useForm(formData, [
+  {
+    field: "email",
+    validators: ["required", "emailValidator"],
+    validationMessage: t("validation.invalid_email"),
+  },
+  {
+    field: "password",
+    validators: ["required"],
+    validationMessage: t("validation.required_field"),
+  },
+]);
 
-const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      log("submit!");
-    } else {
-      log("error submit!", fields);
-    }
-  });
+const invalidEmail = createValidationMessage("email");
+const invalidPassword = createValidationMessage("password");
+
+const loading = computed(() =>
+  rootStore.loading.some(
+    (loadingModule) => loadingModule.currentLoadingName === "signin"
+  )
+);
+const apiErrors = computed(() =>
+  rootStore.errors.filter((error) => error.namespace === "signin")
+);
+
+const submitForm = async () => {
+  await v$.value.$validate();
+  if (!v$.value.$invalid) {
+    await signin(formData);
+  }
 };
 </script>
