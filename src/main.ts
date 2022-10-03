@@ -1,5 +1,7 @@
 import { createApp } from "vue";
 
+import { createPinia } from "pinia";
+
 import i18n from "@/plugins/i18n";
 import router from "@/router";
 
@@ -11,7 +13,7 @@ import "element-plus/theme-chalk/dark/css-vars.css";
 import "@/assets/index.scss";
 
 const app = createApp(App);
-
+app.use(createPinia());
 app.use(i18n);
 app.use(router);
 

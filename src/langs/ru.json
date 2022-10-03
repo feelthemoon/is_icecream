@@ -30,6 +30,6 @@
   "validation": {
     "invalid_email": "Некорректный email",
     "required_field": "Это поле обязательно",
-    "min_length": "Минимальная длина {field} - {length} символов"
+    "min_length": "Минимальная длина {field} - {length} символа(-ов)"
   }
 }
