@@ -18,6 +18,7 @@ import { release } from "os";
 import { join } from "path";
 
 import { app, BrowserWindow, shell, ipcMain, screen } from "electron";
+import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith("6.1")) app.disableHardwareAcceleration();
@@ -81,7 +82,21 @@ async function createWindow() {
   });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  if (process.env.NODE_ENV !== "production") {
+    installExtension(VUEJS3_DEVTOOLS, {
+      loadExtensionOptions: { allowFileAccess: true },
+    })
+      .catch((error) => {
+        console.log("An error occurred: ", error);
+      })
+      .finally(() => {
+        createWindow();
+      });
+  } else {
+    createWindow();
+  }
+});
 
 app.on("window-all-closed", () => {
   win = null;

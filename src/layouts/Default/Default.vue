@@ -1,0 +1,11 @@
+<template>
+  <main
+    class="layout layout--default my-0 mx-auto max-w-1200px w-full h-full flex justify-center items-center"
+  >
+    <router-view v-slot="{ Component }">
+      <Transition name="slide-fade" mode="out-in">
+        <component :is="Component"></component>
+      </Transition>
+    </router-view>
+  </main>
+</template>
