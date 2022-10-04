@@ -35,7 +35,6 @@
     "vite": "^3.1.4",
     "vite-plugin-electron": "^0.9.3",
     "vue": "^3.2.40",
-    "vue-tsc": "^0.40.1"
     "vite-plugin-windicss": "^1.8.8",
     "vue-i18n": "^9.2.2",
     "vue-tsc": "^0.40.1",
