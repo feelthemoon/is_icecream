@@ -44,7 +44,7 @@ export const useForm = (
   validationOptions: Array<ValidationOptions>
 ) => {
   /**
-   * Retruns object of validators
+   * Returns object of validators
    * @param {SimpleValidators | FunctionalValidators} validators
    * @returns {object} ex: { emailValidator, minLength: minLength(8) }
    */
@@ -89,7 +89,7 @@ export const useForm = (
   const v$ = useVuelidate(rules, formData);
 
   /**
-   * Retruns ComputedRef where computing current state for field error
+   * Returns ComputedRef where computing current state for field error
    * @param {string} fieldName - field for validation message
    * @returns {ComputedReF<string | null>}
    */
