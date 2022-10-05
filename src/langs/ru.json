@@ -31,5 +31,17 @@
     "invalid_email": "Некорректный email",
     "required_field": "Это поле обязательно",
     "min_length": "Минимальная длина {field} - {length} символа(-ов)"
+  },
+  "components": {
+    "sidebar": {
+      "links_titles": {
+        "employees_title": "Сотрудники",
+        "notifications_title": "Уведомления",
+        "stalls_title": "Точки продажи",
+        "settings_title": "Настройки",
+        "statistics_title": "Статистика по точкам"
+      },
+      "logout_button_title": "Выход"
+    }
   }
 }

@@ -648,6 +648,7 @@
   version "3.2.40"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.40.tgz#e57799da2a930b975321981fcee3d1e90ed257ae"
   integrity sha512-0PLQ6RUtZM0vO3teRfzGi4ltLUO5aO+kLgwh4Um3THSR03rpQWLTuRCkuO5A41ITzwdWeKdPHtSARuPkoo5pCQ==
+
 "@vuelidate/core@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@vuelidate/core/-/core-2.0.0.tgz#dfe73ba3f997646e07bd4da4f327fe53c29782cb"
@@ -661,6 +662,7 @@
   integrity sha512-fQQcmDWfz7pyH5/JPi0Ng2GEgNK1pUHn/Z/j5rG/Q+HwhgIXvJblTPcZwKOj1ABL7V4UVuGKECvZCDHNGOwdrg==
   dependencies:
     vue-demi "^0.13.11"
+
 "@vueuse/core@^9.1.0":
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-9.2.0.tgz#58e3588b9bc5a69010aa9104b00056ee9ebff738"
@@ -2799,6 +2801,11 @@ matcher@^3.0.0:
   integrity sha512-OkeDaAZ/bQCxeFAozM55PKcKU0yJMPGifLwV4Qgjitu+5MoAfSQN4lsLJeXZ1b8w0x+/Emda6MZgXS1jvsapng==
   dependencies:
     escape-string-regexp "^4.0.0"
+
+mdue@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/mdue/-/mdue-0.1.4.tgz#e3901480927b51c2989c5d3a2e098a5caa520f6b"
+  integrity sha512-MjpRercURZK4uNlcvHf9+Igd3/SwIMOEhZl80USDYUDZhNXXo0zl5mcOJKB86HWbN0+DWQ+uIfq85BMKmeKsNw==
 
 memoize-one@^6.0.0:
   version "6.0.0"

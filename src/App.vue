@@ -7,10 +7,11 @@ import { computed } from "vue";
 
 import { useRoute } from "vue-router";
 
-import { DefaultLayout } from "@/layouts";
+import { DefaultLayout, MainLayout } from "@/layouts";
 
 const layouts = {
   default: DefaultLayout,
+  main: MainLayout,
 };
 const route = useRoute();
 
