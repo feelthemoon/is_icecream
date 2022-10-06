@@ -39,7 +39,11 @@
         "notifications_title": "Уведомления",
         "stalls_title": "Точки продажи",
         "settings_title": "Настройки",
-        "statistics_title": "Статистика по точкам"
+        "statistics_title": "Статистика по точкам",
+        "supplies_title": "Поставки",
+        "reports_title": "Отчеты",
+        "statistics_own_title": "Статистика по моей точке",
+        "employees_own_title": "Сотрудники моей точки"
       },
       "logout_button_title": "Выход"
     }

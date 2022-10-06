@@ -1,5 +1,7 @@
-import { defineStore } from "pinia";
 import { ElNotification } from "element-plus";
+import { defineStore } from "pinia";
+
+import { ErrorNamespaces } from "@/config/api/types";
 
 export interface RootState {
   token: string;
@@ -16,7 +18,7 @@ export const useRootStore = defineStore("root", {
     patchErrors(error: { type: string; message?: string; namespace: string }) {
       const foundError = this.errors.find((err) => err.type === error.type);
 
-      if (error.type === "common_error") {
+      if (error.type === ErrorNamespaces.COMMON) {
         ElNotification({
           title: "Ошибка",
           type: "error",

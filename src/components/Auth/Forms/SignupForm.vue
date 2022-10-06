@@ -57,6 +57,7 @@ import { ElInput, ElButton, ElForm, ElFormItem } from "element-plus";
 import { Email, Lock, AccountBox } from "mdue";
 import { useI18n } from "vue-i18n";
 
+import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
 import { useAuth, useRootStore } from "@/stores";
 import { useForm } from "@/utils/hooks";
 
@@ -97,7 +98,8 @@ const { v$, createValidationMessage } = useForm(formData, [
 
 const loading = computed(() =>
   rootStore.loading.some(
-    (loadingModule) => loadingModule.currentLoadingName === "signup"
+    (loadingModule) =>
+      loadingModule.currentLoadingName === LoadingModules.SIGNUP
   )
 );
 
@@ -106,7 +108,7 @@ const invalidPassword = createValidationMessage("password");
 const invalidFirstName = createValidationMessage("first_name");
 
 const emailApiError = computed(() =>
-  rootStore.errorByType("invalid_data_email", "signup")
+  rootStore.errorByType("invalid_data_email", ErrorNamespaces.SIGNUP)
 );
 
 const submitForm = async () => {

@@ -51,6 +51,7 @@ import { Email, Lock } from "mdue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
+import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
 import { useAuth, useRootStore } from "@/stores";
 import { useForm } from "@/utils/hooks";
 
@@ -82,11 +83,12 @@ const invalidPassword = createValidationMessage("password");
 
 const loading = computed(() =>
   rootStore.loading.some(
-    (loadingModule) => loadingModule.currentLoadingName === "signin"
+    (loadingModule) =>
+      loadingModule.currentLoadingName === LoadingModules.SIGNIN
   )
 );
 const apiErrors = computed(() =>
-  rootStore.errors.filter((error) => error.namespace === "signin")
+  rootStore.errors.filter((error) => error.namespace === ErrorNamespaces.SIGNIN)
 );
 
 const submitForm = async () => {

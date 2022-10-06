@@ -49,7 +49,7 @@ async function createWindow() {
     title: "Main window",
     icon: join(process.env.PUBLIC, "favicon.ico"),
     minWidth: 800,
-    minHeight: 600,
+    minHeight: 770,
     width,
     height,
     webPreferences: {
@@ -88,6 +88,7 @@ app.whenReady().then(() => {
       loadExtensionOptions: { allowFileAccess: true },
     })
       .catch((error) => {
+        //eslint-disable-next-line no-console
         console.log("An error occurred: ", error);
       })
       .finally(() => {

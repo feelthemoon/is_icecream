@@ -1,22 +1,29 @@
 import type { AxiosResponse } from "axios";
 
-import createRequest from "../_base.api";
-import routes from "../config/routes.api";
+import routes from "@/config/api/routes.api";
+import { LoadingModules, SigninData, SignupData } from "@/config/api/types";
 
-export const createSigninRequest = (data: any): Promise<AxiosResponse | void> =>
+import createRequest from "../_base.api";
+import { ErrorNamespaces } from "./../../config/api/types/ApiModules.type";
+
+export const createSigninRequest = (
+  data: SigninData
+): Promise<AxiosResponse | void> =>
   createRequest({
     method: "POST",
     route: routes.signin,
     data,
-    loadingModule: "signin",
-    errorsNamespace: "signin",
+    loadingModule: LoadingModules.SIGNIN,
+    errorsNamespace: ErrorNamespaces.SIGNIN,
   });
 
-export const createSignupRequest = (data: any): Promise<AxiosResponse | void> =>
+export const createSignupRequest = (
+  data: SignupData
+): Promise<AxiosResponse | void> =>
   createRequest({
     method: "POST",
     route: routes.signup,
     data,
-    loadingModule: "signup",
-    errorsNamespace: "signup",
+    loadingModule: LoadingModules.SIGNUP,
+    errorsNamespace: LoadingModules.SIGNUP,
   });
