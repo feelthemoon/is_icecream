@@ -1,10 +1,14 @@
 import type { AxiosResponse } from "axios";
 
 import routes from "@/config/api/routes.api";
-import { LoadingModules, SigninData, SignupData } from "@/config/api/types";
+import {
+  LoadingModules,
+  SigninData,
+  SignupData,
+  ErrorNamespaces,
+} from "@/config/api/types";
 
 import createRequest from "../_base.api";
-import { ErrorNamespaces } from "./../../config/api/types/ApiModules.type";
 
 export const createSigninRequest = (
   data: SigninData
