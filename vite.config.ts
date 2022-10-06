@@ -7,6 +7,7 @@ import vue from "@vitejs/plugin-vue";
 import ElementPlus from "unplugin-element-plus/vite";
 import { defineConfig, loadEnv } from "vite";
 import electron, { onstart } from "vite-plugin-electron";
+import { manualChunksPlugin } from "vite-plugin-webpackchunkname";
 import WindiCSS from "vite-plugin-windicss";
 
 rmSync("dist", { recursive: true, force: true }); // v14.14.0
@@ -51,6 +52,7 @@ export default ({ mode }: { mode: string }) => {
       vueI18n({
         include: path.resolve(__dirname, "./src/langs/*"),
       }),
+      manualChunksPlugin(),
     ],
     resolve: {
       alias: {

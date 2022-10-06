@@ -3,7 +3,7 @@
     <Sidebar :router-links="routerLinks" />
     <router-view v-slot="{ Component }">
       <Transition name="slide-fade" mode="out-in">
-        <component :is="Component"></component>
+        <component class="px-30px" :is="Component"></component>
       </Transition>
     </router-view>
   </div>

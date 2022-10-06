@@ -13,6 +13,7 @@
       <el-input
         v-model.trim="formData.email"
         type="email"
+        :suffix-icon="Email"
         :placeholder="t('placeholders.signin.email')"
       />
     </el-form-item>
@@ -23,6 +24,7 @@
       <el-input
         v-model.trim="formData.password"
         type="password"
+        :suffix-icon="Lock"
         :placeholder="t('placeholders.signin.password')"
       />
     </el-form-item>
@@ -45,7 +47,9 @@
 import { computed, reactive } from "vue";
 
 import { ElInput, ElButton, ElForm, ElFormItem } from "element-plus";
+import { Email, Lock } from "mdue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
 import { useAuth, useRootStore } from "@/stores";
 import { useForm } from "@/utils/hooks";
@@ -53,6 +57,7 @@ import { useForm } from "@/utils/hooks";
 const { t } = useI18n();
 const { signin } = useAuth();
 const rootStore = useRootStore();
+const router = useRouter();
 
 const formData = reactive({
   email: "",
@@ -88,6 +93,9 @@ const submitForm = async () => {
   await v$.value.$validate();
   if (!v$.value.$invalid) {
     await signin(formData);
+    if (rootStore.token) {
+      await router.push({ name: "HomePage" });
+    }
   }
 };
 </script>

@@ -13,6 +13,7 @@
       <el-input
         maxlength="25"
         v-model.trim="formData.first_name"
+        :suffix-icon="AccountBox"
         :placeholder="t('placeholders.signup.name')"
       />
     </el-form-item>
@@ -24,6 +25,7 @@
       <el-input
         v-model.trim="formData.email"
         type="email"
+        :suffix-icon="Email"
         :placeholder="t('placeholders.signup.email')"
       />
     </el-form-item>
@@ -36,6 +38,7 @@
         v-model.trim="formData.password"
         maxlength="255"
         type="password"
+        :suffix-icon="Lock"
         :placeholder="t('placeholders.signup.password')"
       />
     </el-form-item>
@@ -51,6 +54,7 @@
 import { computed, reactive } from "vue";
 
 import { ElInput, ElButton, ElForm, ElFormItem } from "element-plus";
+import { Email, Lock, AccountBox } from "mdue";
 import { useI18n } from "vue-i18n";
 
 import { useAuth, useRootStore } from "@/stores";
