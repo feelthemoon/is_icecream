@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-full min-w-200px">
+  <div class="min-h-full min-w-270px">
     <el-menu class="h-full pt-35px">
       <div class="flex justify-center mb-15px mr-5px">
         <img src="@/assets/static/logo.svg" />
@@ -15,7 +15,7 @@
           class="absolute left-0 right-0 bottom-0 top-0"
           :to="link.path"
         ></router-link>
-        <component class="mr-10px" :is="link.icon"></component>
+        <component class="mr-20px w-1.5em h-1.5em" :is="link.icon"></component>
         <template #title>{{ link.title }}</template>
       </el-menu-item>
       <el-divider></el-divider>
@@ -28,7 +28,7 @@
           to="/settings"
         >
         </router-link>
-        <component class="mr-10px" :is="Cog"></component>
+        <component class="mr-20px w-1.5em h-1.5em" :is="Cog"></component>
         <template #title>{{
           $t("components.sidebar.links_titles.settings_title")
         }}</template>

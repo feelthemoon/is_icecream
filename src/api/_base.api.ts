@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import type { AxiosRequestHeaders, Method, AxiosResponse } from "axios";
 
+import { LoadingModules, ErrorNamespaces } from "@/config/api/types";
 import { useRootStore } from "@/stores";
 
 const REQUEST_BASE_URL = import.meta.env.VITE_APP_API_URL;
@@ -26,7 +27,7 @@ const createRequest = async (
 
   rootStore.$patch((state) => {
     state.loading.push({
-      currentLoadingName: requestConfig.loadingModule || "common",
+      currentLoadingName: requestConfig.loadingModule || LoadingModules.COMMON,
     });
     state.errors = [];
   });
@@ -54,14 +55,14 @@ const createRequest = async (
           rootStore.patchErrors({
             type: err.type,
             message: err.text,
-            namespace: requestConfig.errorsNamespace || "common_error",
+            namespace: requestConfig.errorsNamespace || ErrorNamespaces.COMMON,
           });
         }
       );
     } else {
       rootStore.patchErrors({
         type: "common_error",
-        namespace: "common_error",
+        namespace: ErrorNamespaces.COMMON,
       });
     }
     return response;
@@ -70,7 +71,7 @@ const createRequest = async (
       const currentLoadingIndex = state.loading.findIndex(
         (loadingModule) =>
           loadingModule.currentLoadingName ===
-          (requestConfig.loadingModule || "common")
+          (requestConfig.loadingModule || LoadingModules.COMMON)
       );
 
       state.loading.splice(currentLoadingIndex, 1);

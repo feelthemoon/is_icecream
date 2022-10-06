@@ -1,3 +1,3 @@
 export { default as log } from "./log";
 
-export * from "./customValidators";
+export * from "./hooks/generateSidebarLinks";
