@@ -1,5 +1,5 @@
-import { ElNotification } from "element-plus";
 import { defineStore } from "pinia";
+import { ElNotification } from "element-plus";
 
 export interface RootState {
   token: string;
@@ -18,7 +18,7 @@ export const useRootStore = defineStore("root", {
 
       if (error.type === "common_error") {
         ElNotification({
-          // title: "Ошибка",
+          title: "Ошибка",
           type: "error",
           message: error.message ?? "Попробуйте ещё раз",
           duration: 2500,
