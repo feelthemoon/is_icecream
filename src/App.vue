@@ -1,5 +1,9 @@
 <template>
-  <component :is="currentLayout"></component>
+  <div class="h-full">
+    <Transition name="slide-fade" mode="out-in">
+      <component :is="currentLayout"></component>
+    </Transition>
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -28,6 +28,7 @@ const createRequest = async (
     state.loading.push({
       currentLoadingName: requestConfig.loadingModule || "common",
     });
+    state.errors = [];
   });
 
   let response;
@@ -44,9 +45,10 @@ const createRequest = async (
         token: response.headers.authorization,
       });
     }
+
     return response;
   } catch (error) {
-    if (error instanceof AxiosError) {
+    if (error instanceof AxiosError && error.response?.data) {
       error.response?.data.message.forEach(
         (err: { type: string; text: string }) => {
           rootStore.patchErrors({
@@ -56,18 +58,22 @@ const createRequest = async (
           });
         }
       );
+    } else {
+      rootStore.patchErrors({
+        type: "common_error",
+        namespace: "common_error",
+      });
     }
     return response;
   } finally {
     rootStore.$patch((state) => {
-      state.loading.splice(
-        state.loading.findIndex(
-          (loadingModule) =>
-            loadingModule.currentLoadingName ===
-            (requestConfig.loadingModule || "common")
-        ),
-        1
+      const currentLoadingIndex = state.loading.findIndex(
+        (loadingModule) =>
+          loadingModule.currentLoadingName ===
+          (requestConfig.loadingModule || "common")
       );
+
+      state.loading.splice(currentLoadingIndex, 1);
     });
   }
 };
