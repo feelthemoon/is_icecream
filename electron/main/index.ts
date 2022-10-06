@@ -46,7 +46,7 @@ async function createWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
   win = new BrowserWindow({
-    title: "Main window",
+    title: "Easy Icecream",
     icon: join(process.env.PUBLIC, "favicon.ico"),
     minWidth: 800,
     minHeight: 770,
