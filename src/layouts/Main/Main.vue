@@ -11,7 +11,11 @@
 
 <script setup lang="ts">
 import { Sidebar } from "@/components";
-import { useLinks } from "@/utils";
+import { useUsersStore } from "@/stores/users.store";
+import { useLinks } from "@/utils/hooks";
 
 const routerLinks = useLinks("admin");
+const { getMe } = useUsersStore();
+
+getMe();
 </script>

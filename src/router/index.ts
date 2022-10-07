@@ -1,4 +1,10 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory,
+  NavigationGuardNext,
+  RouteLocationNormalized,
+  RouteRecordRaw,
+} from "vue-router";
 
 import { useRootStore } from "@/stores";
 
@@ -12,7 +18,7 @@ const HomePage = () =>
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: { name: "SigninPage" },
+    redirect: { name: "HomePage" },
   },
   {
     path: "/signin",
@@ -30,6 +36,7 @@ const routes: RouteRecordRaw[] = [
     component: HomePage,
     meta: {
       layout: "main",
+      needsAuth: true,
     },
   },
 ];
@@ -39,10 +46,23 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((_, __, next) => {
-  const rootStore = useRootStore();
-  rootStore.$patch({ errors: [] });
-  next();
-});
+router.beforeEach(
+  (
+    to: RouteLocationNormalized,
+    _: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) => {
+    const rootStore = useRootStore();
+    rootStore.$patch({ errors: [] });
+
+    if (!to.meta.needsAuth && localStorage.getItem("login")) {
+      next({ name: "HomePage" });
+    } else if (to.meta.needsAuth && !localStorage.getItem("login")) {
+      next({ name: "SigninPage" });
+    } else {
+      next();
+    }
+  }
+);
 
 export default router;
