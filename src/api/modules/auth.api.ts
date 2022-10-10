@@ -13,21 +13,29 @@ import createRequest from "../_base.api";
 export const createSigninRequest = (
   data: SigninData
 ): Promise<AxiosResponse | void> =>
-  createRequest({
-    method: "POST",
-    route: routes.signin,
-    data,
-    loadingModule: LoadingModules.SIGNIN,
-    errorsNamespace: ErrorNamespaces.SIGNIN,
-  });
+  createRequest(
+    {
+      method: "POST",
+      route: routes.signin,
+      data,
+    },
+    {
+      loadingModule: LoadingModules.SIGNIN,
+      errorsNamespace: ErrorNamespaces.SIGNIN,
+    }
+  );
 
 export const createSignupRequest = (
   data: SignupData
 ): Promise<AxiosResponse | void> =>
-  createRequest({
-    method: "POST",
-    route: routes.signup,
-    data,
-    loadingModule: LoadingModules.SIGNUP,
-    errorsNamespace: LoadingModules.SIGNUP,
-  });
+  createRequest(
+    {
+      method: "POST",
+      route: routes.signup,
+      data,
+    },
+    {
+      loadingModule: LoadingModules.SIGNUP,
+      errorsNamespace: ErrorNamespaces.SIGNUP,
+    }
+  );

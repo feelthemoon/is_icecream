@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { Sidebar } from "@/components";
-import { useUsersStore } from "@/stores/users.store";
+import { useUsersStore } from "@/stores";
 import { useLinks } from "@/utils/hooks";
 
 const routerLinks = useLinks("admin");

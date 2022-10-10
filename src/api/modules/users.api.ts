@@ -1,7 +1,6 @@
 import type { AxiosResponse } from "axios";
 
 import routes from "@/config/api/routes.api";
-import { LoadingModules, ErrorNamespaces } from "@/config/api/types";
 
 import createRequest from "../_base.api";
 
@@ -14,6 +13,4 @@ export const createUserGetInfoRequest = (
     headers: {
       authorization: token,
     },
-    loadingModule: LoadingModules.SIGNIN,
-    errorsNamespace: ErrorNamespaces.SIGNIN,
   });

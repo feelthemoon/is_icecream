@@ -1,12 +1,12 @@
 import { AxiosError } from "axios";
 
-import { RequestConfig, ErrorNamespaces } from "@/config/api/types";
+import { ErrorNamespaces } from "@/config/api/types";
 import router from "@/router";
 import { useRootStore } from "@/stores/root.store";
 
 export const useApiErrorHandler = (
   error: unknown,
-  requestConfig: RequestConfig
+  errorsNamespace: ErrorNamespaces | undefined
 ) => {
   const rootStore = useRootStore();
 
@@ -16,7 +16,7 @@ export const useApiErrorHandler = (
         rootStore.patchErrors({
           type: err.type,
           message: err.text,
-          namespace: requestConfig.errorsNamespace || ErrorNamespaces.COMMON,
+          namespace: errorsNamespace || ErrorNamespaces.COMMON,
         });
       }
     );
