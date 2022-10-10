@@ -6,6 +6,7 @@ import {
   RouteRecordRaw,
 } from "vue-router";
 
+import { LoadingModules } from "@/config/api/types";
 import { useRootStore } from "@/stores";
 
 const SigninPage = () =>
@@ -53,7 +54,16 @@ router.beforeEach(
     next: NavigationGuardNext
   ) => {
     const rootStore = useRootStore();
-    rootStore.$patch({ errors: [] });
+
+    rootStore.$patch((state) => {
+      state.errors = [];
+      const commonLoading = state.loading.findIndex(
+        (loadingModule) =>
+          loadingModule.currentLoadingName === LoadingModules.COMMON
+      );
+
+      state.loading.splice(commonLoading, 1);
+    });
 
     if (!to.meta.needsAuth && localStorage.getItem("login")) {
       next({ name: "HomePage" });
