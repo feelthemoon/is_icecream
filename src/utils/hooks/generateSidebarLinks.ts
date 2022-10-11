@@ -8,59 +8,64 @@ import {
   FileChart,
   TruckDelivery,
 } from "mdue";
-import { useI18n } from "vue-i18n";
 
-import { UserRoles } from "@/config/app/types/UserRoles";
+import { UserRoles } from "@/config/app/types";
 
-export const useLinks = (
-  userRole: string
-): Array<{
+export type SidebarLinks = {
   id: number;
   title: string;
   path: string;
   icon: Component;
-}> => {
-  const { t } = useI18n();
+};
 
+export const useLinks = ({
+  userRole = UserRoles.SALLER,
+  translator,
+}: {
+  userRole?: string;
+  translator?: any;
+}): Array<SidebarLinks> => {
   const COMMON_LINKS = [
     {
-      title: t("components.sidebar.links_titles.notifications_title"),
+      id: 1,
+      title: translator("components.sidebar.links_titles.notifications_title"),
       path: "/notifications",
       icon: Bell,
     },
     {
-      title: t("components.sidebar.links_titles.supplies_title"),
+      id: 2,
+      title: translator("components.sidebar.links_titles.supplies_title"),
       path: "/supplies",
       icon: TruckDelivery,
     },
     {
-      title: t("components.sidebar.links_titles.reports_title"),
+      id: 3,
+      title: translator("components.sidebar.links_titles.reports_title"),
       path: "/reports",
       icon: FileChart,
     },
   ];
 
-  let roleLinks: Array<{
-    title: string;
-    path: string;
-    icon: Component;
-  }> = [];
+  let roleLinks: Array<SidebarLinks> = [];
 
   switch (userRole) {
     case UserRoles.ADMIN:
       roleLinks = [
         {
-          title: t("components.sidebar.links_titles.employees_title"),
+          id: 4,
+          title: translator("components.sidebar.links_titles.employees_title"),
           path: "/employees",
           icon: AccountMultiple,
         },
         {
-          title: t("components.sidebar.links_titles.statistics_title"),
+          id: 5,
+          title: translator("components.sidebar.links_titles.statistics_title"),
           path: "/statistics",
           icon: Finance,
         },
         {
-          title: t("components.sidebar.links_titles.stalls_title"),
+          id: 6,
+          title: translator("components.sidebar.links_titles.stalls_title"),
           path: "/stalls",
           icon: Sitemap,
         },
@@ -69,12 +74,18 @@ export const useLinks = (
     case UserRoles.MANAGER:
       roleLinks = [
         {
-          title: t("components.sidebar.links_titles.employees_own_title"),
+          id: 7,
+          title: translator(
+            "components.sidebar.links_titles.employees_own_title"
+          ),
           path: "/employees",
           icon: AccountMultiple,
         },
         {
-          title: t("components.sidebar.links_titles.statistics_own_title"),
+          id: 8,
+          title: translator(
+            "components.sidebar.links_titles.statistics_own_title"
+          ),
           path: "/statistics",
           icon: Finance,
         },
@@ -83,7 +94,10 @@ export const useLinks = (
     case UserRoles.SALLER:
       roleLinks = [
         {
-          title: t("components.sidebar.links_titles.statistics_own_title"),
+          id: 9,
+          title: translator(
+            "components.sidebar.links_titles.statistics_own_title"
+          ),
           path: "/statistics",
           icon: Finance,
         },
@@ -91,8 +105,5 @@ export const useLinks = (
       break;
   }
 
-  return [...roleLinks, ...COMMON_LINKS].map((link, index) => ({
-    ...link,
-    id: index + 1,
-  }));
+  return [...roleLinks, ...COMMON_LINKS];
 };

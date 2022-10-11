@@ -16,6 +16,7 @@ process.env.PUBLIC = app.isPackaged
 
 import { release } from "os";
 import { join } from "path";
+import * as util from "util";
 
 import { app, BrowserWindow, shell, ipcMain, screen } from "electron";
 import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
@@ -54,9 +55,6 @@ async function createWindow() {
     height,
     webPreferences: {
       preload,
-      // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
-      // Consider using contextBridge.exposeInMainWorld
-      // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -67,9 +65,28 @@ async function createWindow() {
   } else {
     win.loadURL(url);
     win.webContents.openDevTools();
-    // Open devTool if the app is not packaged
   }
 
+  const cookies = win.webContents.session.cookies;
+  cookies.on("changed", function (_event, cookie, _cause, removed) {
+    if (cookie.session && !removed) {
+      const url = util.format(
+        "%s://%s%s",
+        !cookie.httpOnly && cookie.secure ? "https" : "http",
+        cookie.domain,
+        cookie.path
+      );
+
+      cookies.set({
+        url: url,
+        name: cookie.name,
+        value: cookie.value,
+        secure: cookie.secure,
+        httpOnly: cookie.httpOnly,
+        expirationDate: new Date().setDate(new Date().getDate() + 14),
+      });
+    }
+  });
   // Test actively push message to the Electron-Renderer
   win.webContents.on("did-finish-load", () => {
     win?.webContents.send("main-process-message", new Date().toLocaleString());
