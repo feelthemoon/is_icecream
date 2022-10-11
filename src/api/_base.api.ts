@@ -2,9 +2,9 @@ import axios from "axios";
 import type { AxiosResponse } from "axios";
 
 import {
-  ErrorNamespaces,
   LoadingModules,
   RequestConfig,
+  RequestOptions,
 } from "@/config/api/types";
 import { useRootStore } from "@/stores";
 import { useApiErrorHandler } from "@/utils/hooks";
@@ -14,10 +14,7 @@ const REQUEST_API_PREFIX = "/api/v1";
 
 const createRequest = async (
   requestConfig: RequestConfig,
-  requestOptions?: {
-    loadingModule?: LoadingModules;
-    errorsNamespace?: ErrorNamespaces;
-  }
+  requestOptions?: RequestOptions
 ): Promise<AxiosResponse | void> => {
   const rootStore = useRootStore();
 
@@ -51,6 +48,10 @@ const createRequest = async (
     return response;
   } catch (error) {
     useApiErrorHandler(error, requestOptions?.errorsNamespace);
+
+    if (requestOptions?.bubbleErrors) {
+      throw error;
+    }
   } finally {
     rootStore.$patch((state) => {
       const currentLoadingIndex = state.loading.findIndex(

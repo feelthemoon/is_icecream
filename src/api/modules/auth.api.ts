@@ -39,3 +39,13 @@ export const createSignupRequest = (
       errorsNamespace: ErrorNamespaces.SIGNUP,
     }
   );
+
+export const createRefreshAccessTokenRequest =
+  (): Promise<AxiosResponse | void> =>
+    createRequest(
+      {
+        method: "POST",
+        route: routes.refreshAccessToken,
+      },
+      { bubbleErrors: true }
+    );
