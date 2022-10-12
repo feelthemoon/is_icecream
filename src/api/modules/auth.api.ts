@@ -49,3 +49,16 @@ export const createRefreshAccessTokenRequest =
       },
       { bubbleErrors: true }
     );
+
+export const createLogoutRequest = (): Promise<AxiosResponse | void> =>
+  createRequest(
+    {
+      method: "POST",
+      route: routes.logout,
+    },
+    {
+      loadingModule: LoadingModules.LOGOUT,
+      needsAuth: true,
+      bubbleErrors: true,
+    }
+  );
