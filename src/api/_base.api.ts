@@ -13,7 +13,7 @@ const REQUEST_BASE_URL = import.meta.env.VITE_APP_API_URL;
 const REQUEST_API_PREFIX = "/api/v1";
 
 const createRequest = async (
-  requestConfig: RequestConfig,
+  { headers = {}, ...requestConfig }: RequestConfig,
   requestOptions?: RequestOptions
 ): Promise<AxiosResponse | void> => {
   const rootStore = useRootStore();
@@ -31,12 +31,19 @@ const createRequest = async (
 
   let response: AxiosResponse;
 
+  const request = {
+    ...requestConfig,
+    headers,
+    url: requestURL,
+    withCredentials: true,
+  };
+
+  if (requestOptions?.needsAuth) {
+    request.headers["authorization"] = rootStore.token;
+  }
+
   try {
-    response = await axios.request({
-      ...requestConfig,
-      url: requestURL,
-      withCredentials: true,
-    });
+    response = await axios.request(request);
 
     if (response.headers.authorization) {
       rootStore.$patch((state) => {

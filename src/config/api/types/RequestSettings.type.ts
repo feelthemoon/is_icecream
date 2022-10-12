@@ -16,4 +16,5 @@ export interface RequestOptions {
   loadingModule?: LoadingModules;
   errorsNamespace?: ErrorNamespaces;
   bubbleErrors?: boolean;
+  needsAuth?: boolean;
 }
