@@ -1,12 +1,14 @@
-import type { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { defineStore } from "pinia";
 
 import {
   createSigninRequest,
   createSignupRequest,
   createRefreshAccessTokenRequest,
+  createLogoutRequest,
 } from "@/api";
 import type { SigninData, SignupData } from "@/config/api/types";
+import router from "@/router";
 import { useRootStore } from "@/stores";
 
 export const useAuth = defineStore("auth", () => {
@@ -30,6 +32,24 @@ export const useAuth = defineStore("auth", () => {
       throw Error();
     }
   };
+  const logout = async () => {
+    const rootStore = useRootStore();
 
-  return { signin, signup, refreshAccessToken };
+    try {
+      await createLogoutRequest();
+
+      rootStore.$reset();
+      localStorage.clear();
+
+      await router.push({ name: "SigninPage" });
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.status === 401) {
+        rootStore.$reset();
+        localStorage.clear();
+
+        await router.push({ name: "SigninPage" });
+      }
+    }
+  };
+  return { signin, signup, refreshAccessToken, logout };
 });

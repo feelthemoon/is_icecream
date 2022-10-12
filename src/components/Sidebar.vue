@@ -33,7 +33,12 @@
           $t("components.sidebar.links_titles.settings_title")
         }}</template>
       </el-menu-item>
-      <el-button :icon="Logout" class="ml-20px mt-10px absolute bottom-40px">
+      <el-button
+        @click="logout"
+        :loading="loading"
+        :icon="Logout"
+        class="ml-20px mt-10px !absolute bottom-40px"
+      >
         {{ $t("components.sidebar.logout_button_title") }}
       </el-button>
     </el-menu>
@@ -41,10 +46,14 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import type { Component } from "vue";
 
 import { ElMenu, ElMenuItem, ElDivider, ElButton } from "element-plus";
 import { Cog, Logout } from "mdue";
+
+import { LoadingModules } from "@/config/api/types";
+import { useAuth, useRootStore } from "@/stores";
 
 export interface Props {
   routerLinks: Array<{
@@ -56,4 +65,14 @@ export interface Props {
 }
 
 const props = defineProps<Props>();
+
+const { logout } = useAuth();
+const rootStore = useRootStore();
+
+const loading = computed(() =>
+  rootStore.loading.some(
+    (loadingModule) =>
+      loadingModule.currentLoadingName === LoadingModules.LOGOUT
+  )
+);
 </script>
