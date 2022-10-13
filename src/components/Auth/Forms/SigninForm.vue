@@ -81,14 +81,9 @@ const { v$, createValidationMessage } = useForm(formData, [
 const invalidEmail = createValidationMessage("email");
 const invalidPassword = createValidationMessage("password");
 
-const loading = computed(() =>
-  rootStore.loading.some(
-    (loadingModule) =>
-      loadingModule.currentLoadingName === LoadingModules.SIGNIN
-  )
-);
+const loading = computed(() => rootStore.loadingByName(LoadingModules.SIGNIN));
 const apiErrors = computed(() =>
-  rootStore.errors.filter((error) => error.namespace === ErrorNamespaces.SIGNIN)
+  rootStore.errorByNamespace(ErrorNamespaces.SIGNIN)
 );
 
 const submitForm = async () => {

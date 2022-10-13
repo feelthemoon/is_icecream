@@ -69,10 +69,5 @@ const props = defineProps<Props>();
 const { logout } = useAuth();
 const rootStore = useRootStore();
 
-const loading = computed(() =>
-  rootStore.loading.some(
-    (loadingModule) =>
-      loadingModule.currentLoadingName === LoadingModules.LOGOUT
-  )
-);
+const loading = computed(() => rootStore.loadingByName(LoadingModules.LOGOUT));
 </script>

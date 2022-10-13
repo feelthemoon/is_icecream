@@ -1,7 +1,7 @@
 import { ElNotification } from "element-plus";
 import { defineStore } from "pinia";
 
-import { ErrorNamespaces } from "@/config/api/types";
+import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
 
 export interface RootState {
   token: string;
@@ -38,5 +38,16 @@ export const useRootStore = defineStore("root", {
         (error) => error.type === type && error.namespace === namespace
       );
     },
+    errorByNamespace: (state: RootState) => (namespace: ErrorNamespaces) => {
+      return state.errors.filter((error) => error.namespace === namespace);
+    },
+    loadingByName:
+      (state: RootState) =>
+      (loadingModuleName: LoadingModules): boolean => {
+        return state.loading.some(
+          (loadingModule) =>
+            loadingModule.currentLoadingName === loadingModuleName
+        );
+      },
   },
 });
