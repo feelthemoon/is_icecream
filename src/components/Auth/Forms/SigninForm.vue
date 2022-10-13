@@ -8,7 +8,7 @@
   >
     <el-form-item
       class="min-w-420px !mb-5"
-      :error="invalidEmail || apiErrors[0]?.message"
+      :error="invalidEmail || apiErrors?.message"
     >
       <el-input
         v-model.trim="formData.email"
@@ -19,7 +19,7 @@
     </el-form-item>
     <el-form-item
       class="min-w-420px !mb-2"
-      :error="invalidPassword || apiErrors[0]?.message"
+      :error="invalidPassword || apiErrors?.message"
     >
       <el-input
         v-model.trim="formData.password"
@@ -83,7 +83,7 @@ const invalidPassword = createValidationMessage("password");
 
 const loading = computed(() => rootStore.loadingByName(LoadingModules.SIGNIN));
 const apiErrors = computed(() =>
-  rootStore.errorByNamespace(ErrorNamespaces.SIGNIN)
+  rootStore.errorByType("invalid_data", ErrorNamespaces.SIGNIN)
 );
 
 const submitForm = async () => {
