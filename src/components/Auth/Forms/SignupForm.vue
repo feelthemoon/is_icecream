@@ -96,12 +96,7 @@ const { v$, createValidationMessage } = useForm(formData, [
   },
 ]);
 
-const loading = computed(() =>
-  rootStore.loading.some(
-    (loadingModule) =>
-      loadingModule.currentLoadingName === LoadingModules.SIGNUP
-  )
-);
+const loading = computed(() => rootStore.loadingByName(LoadingModules.SIGNUP));
 
 const invalidEmail = createValidationMessage("email");
 const invalidPassword = createValidationMessage("password");
