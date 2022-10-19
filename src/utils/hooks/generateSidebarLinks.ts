@@ -75,17 +75,13 @@ export const useLinks = ({
       roleLinks = [
         {
           id: 7,
-          title: translator(
-            "components.sidebar.links_titles.employees_own_title"
-          ),
+          title: translator("components.sidebar.links_titles.employees_title"),
           path: "/employees",
           icon: AccountMultiple,
         },
         {
           id: 8,
-          title: translator(
-            "components.sidebar.links_titles.statistics_own_title"
-          ),
+          title: translator("components.sidebar.links_titles.statistics_title"),
           path: "/statistics",
           icon: Finance,
         },
@@ -95,9 +91,7 @@ export const useLinks = ({
       roleLinks = [
         {
           id: 9,
-          title: translator(
-            "components.sidebar.links_titles.statistics_own_title"
-          ),
+          title: translator("components.sidebar.links_titles.statistics_title"),
           path: "/statistics",
           icon: Finance,
         },
