@@ -1,8 +1,10 @@
 <template>
   <div class="h-full">
-    <Transition name="slide-fade" mode="out-in">
-      <component :is="currentLayout"></component>
-    </Transition>
+    <Suspense>
+      <Transition name="slide-fade" mode="out-in">
+        <component :is="currentLayout"></component>
+      </Transition>
+    </Suspense>
   </div>
 </template>
 

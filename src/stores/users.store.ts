@@ -2,11 +2,13 @@ import { Ref, ref } from "vue";
 
 import { defineStore } from "pinia";
 
-import { createUserGetInfoRequest } from "@/api";
+import { createGetAllUsersRequest, createUserGetInfoRequest } from "@/api";
 import { User } from "@/config/app/types";
 
 export const useUsersStore = defineStore("users", () => {
   const me: Ref<User | null> = ref(null);
+  const users: Ref<User[] | null> = ref(null);
+  const totalUsers: Ref<number | null> = ref(null);
 
   const getMe = async () => {
     const response = await createUserGetInfoRequest();
@@ -15,5 +17,13 @@ export const useUsersStore = defineStore("users", () => {
     }
   };
 
-  return { me, getMe };
+  const getAllUsers = async (page = 1) => {
+    const response = await createGetAllUsersRequest(page);
+    if (response?.data) {
+      users.value = response.data.data;
+      totalUsers.value = response.data.total;
+    }
+  };
+
+  return { me, users, totalUsers, getMe, getAllUsers };
 });
