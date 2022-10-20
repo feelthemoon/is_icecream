@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "rimraf release && vue-tsc --noEmit && vite build && electron-builder",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .eslintignore",
-    "postinstall": "husky install"
+    "postinstall": "husky install && source .zshrc"
   },
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
