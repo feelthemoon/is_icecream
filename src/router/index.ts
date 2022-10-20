@@ -15,6 +15,8 @@ const SignupPage = () =>
   import(/* webpackChunkName: "auth_group" */ "@/views/Auth/Signup.vue");
 const HomePage = () =>
   import(/* webpackChunkName: "home_page" */ "@/views/Main/Home.vue");
+const EmployeesPage = () =>
+  import(/* webpackChunkName: "employees_page" */ "@/views/Main/Employees.vue");
 
 const routes: RouteRecordRaw[] = [
   {
@@ -35,6 +37,15 @@ const routes: RouteRecordRaw[] = [
     path: "/home",
     name: "HomePage",
     component: HomePage,
+    meta: {
+      layout: "main",
+      needsAuth: true,
+    },
+  },
+  {
+    path: "/employees",
+    name: "EmployeesPage",
+    component: EmployeesPage,
     meta: {
       layout: "main",
       needsAuth: true,

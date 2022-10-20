@@ -1,7 +1,11 @@
 <template>
   <div class="wrapper flex space-between w-full h-full">
     <Sidebar :router-links="sidebarLinks" />
-    <router-view v-slot="{ Component }">
+    <router-view
+      v-if="canLoadCurrentPage"
+      class="main-page"
+      v-slot="{ Component }"
+    >
       <Transition name="slide-fade" mode="out-in">
         <component class="px-30px" :is="Component"></component>
       </Transition>
@@ -10,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { shallowRef } from "vue";
+import { ref, shallowRef } from "vue";
 
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
@@ -28,10 +32,13 @@ const { refreshAccessToken } = useAuth();
 const rootStore = useRootStore();
 const router = useRouter();
 
+const canLoadCurrentPage = ref(false);
+
 if (!rootStore.token) {
   refreshAccessToken()
     .then(() => {
       userStore.getMe().then(() => {
+        canLoadCurrentPage.value = true;
         sidebarLinks.value = useLinks({
           userRole: userStore.me?.role,
           translator: t,
@@ -43,6 +50,7 @@ if (!rootStore.token) {
     });
 } else {
   userStore.getMe().then(() => {
+    canLoadCurrentPage.value = true;
     sidebarLinks.value = useLinks({
       userRole: userStore.me?.role,
       translator: t,

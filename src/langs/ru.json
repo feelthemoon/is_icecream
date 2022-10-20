@@ -8,6 +8,9 @@
       "email": "Введите свой email",
       "password": "Придумайте пароль",
       "name": "Введите свое имя"
+    },
+    "employees": {
+      "search": "ФИО/email сотрудника"
     }
   },
   "pages": {
@@ -29,6 +32,9 @@
     "home": {
       "title": "Добро пожаловать в информационную систему управления сетью киосков мороженого",
       "text": "Чтобы начать работу, выберите нужный пункт из меню слева"
+    },
+    "employees": {
+      "title": "Сотрудники торговой сети"
     }
   },
   "validation": {
@@ -48,6 +54,35 @@
         "reports_title": "Отчеты"
       },
       "logout_button_title": "Выход"
+    },
+    "employees_table": {
+      "tooltips": {
+        "delete": "Удалить",
+        "edit": "Редактировать",
+        "confirm_registration": "Подтвердить регистрацию"
+      },
+      "labels": {
+        "first_name": "Имя",
+        "second_name": "Фамилия",
+        "middle_name": "Отчество",
+        "email": "Email",
+        "salary": "Зарплата",
+        "role": "Должность",
+        "stall_name": "Точка продажи",
+        "created_at": "Добавлен",
+        "status": "Статус"
+      },
+      "statuses": {
+        "working": "Работает",
+        "leave": "Отсутствует",
+        "vacation": "В отпуске",
+        "medical": "На больничном"
+      },
+      "roles": {
+        "saller": "Продавец",
+        "manager": "Менеджер",
+        "admin": "Администратор"
+      }
     }
   }
 }

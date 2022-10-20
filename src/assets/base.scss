@@ -3,3 +3,8 @@ body,
 #app {
   height: 100vh;
 }
+
+.main-page {
+  max-width: calc(100% - 270px);
+  width: 100%;
+}
