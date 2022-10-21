@@ -1,43 +1,33 @@
 <template>
   <div class="min-h-full min-w-270px">
-    <el-menu class="h-full pt-35px">
+    <el-menu class="h-full pt-35px" router>
       <div class="flex justify-center mb-15px mr-5px">
         <img src="@/assets/static/logo.svg" />
       </div>
       <el-divider></el-divider>
       <el-menu-item
-        class="relative"
         v-for="link in props.routerLinks"
+        class="relative"
+        :class="{ 'is-active': route.path === link.path }"
         :key="link.id"
-        :index="link.id.toString()"
+        :index="link.path"
+        :route="link.path"
       >
-        <router-link
-          class="absolute left-0 right-0 bottom-0 top-0"
-          :to="link.path"
-        ></router-link>
         <component class="mr-20px w-1.5em h-1.5em" :is="link.icon"></component>
         <template #title>{{ link.title }}</template>
       </el-menu-item>
       <el-divider></el-divider>
-      <el-menu-item
-        class="relative"
-        :index="(props.routerLinks.length + 1).toString()"
-      >
-        <router-link
-          class="absolute left-0 right-0 bottom-0 top-0"
-          to="/settings"
-        >
-        </router-link>
+      <el-menu-item class="relative" index="/settings" route="/settings">
         <component class="mr-20px w-1.5em h-1.5em" :is="Cog"></component>
         <template #title>{{
           $t("components.sidebar.links_titles.settings_title")
         }}</template>
       </el-menu-item>
       <el-button
+        class="ml-20px mt-10px !absolute bottom-40px"
         @click="logout"
         :loading="loading"
         :icon="Logout"
-        class="ml-20px mt-10px !absolute bottom-40px"
       >
         {{ $t("components.sidebar.logout_button_title") }}
       </el-button>
@@ -51,9 +41,11 @@ import type { Component } from "vue";
 
 import { ElMenu, ElMenuItem, ElDivider, ElButton } from "element-plus";
 import { Cog, Logout } from "mdue";
+import { useRoute } from "vue-router";
 
 import { LoadingModules } from "@/config/api/types";
 import { useAuth, useRootStore } from "@/stores";
+import { log } from "@/utils";
 
 export interface Props {
   routerLinks: Array<{
@@ -66,6 +58,8 @@ export interface Props {
 
 const props = defineProps<Props>();
 
+const route = useRoute();
+log(computed(() => route.path).value);
 const { logout } = useAuth();
 const rootStore = useRootStore();
 
