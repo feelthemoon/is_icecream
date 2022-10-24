@@ -45,7 +45,6 @@ import { useRoute } from "vue-router";
 
 import { LoadingModules } from "@/config/api/types";
 import { useAuth, useRootStore } from "@/stores";
-import { log } from "@/utils";
 
 export interface Props {
   routerLinks: Array<{
@@ -59,7 +58,6 @@ export interface Props {
 const props = defineProps<Props>();
 
 const route = useRoute();
-log(computed(() => route.path).value);
 const { logout } = useAuth();
 const rootStore = useRootStore();
 

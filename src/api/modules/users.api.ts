@@ -14,12 +14,14 @@ export const createUserGetInfoRequest = (): Promise<AxiosResponse | void> =>
   );
 
 export const createGetAllUsersRequest = (
-  page: number
+  page: number,
+  filters?: { [key: string]: any }
 ): Promise<AxiosResponse | void> =>
   createRequest(
     {
       method: "GET",
       route: routes.users(`all/${page}`),
+      params: filters,
     },
     { needsAuth: true }
   );

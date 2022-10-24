@@ -5,6 +5,7 @@
       :users="store.users"
       :total="store.totalUsers"
       @change-page="loadNextPage"
+      @change-filters="filterTable"
     />
   </div>
 </template>
@@ -19,5 +20,12 @@ await store.getAllUsers();
 
 const loadNextPage = async (page: number) => {
   await store.getAllUsers(page);
+};
+
+const filterTable = async (filter: { [key: string]: any }) => {
+  store.$patch((state) => {
+    state.filters = { ...state.filters, ...filter };
+  });
+  await store.getAllUsers();
 };
 </script>
