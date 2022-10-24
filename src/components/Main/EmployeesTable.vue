@@ -6,7 +6,14 @@
       :height="
         props.users?.length && props.users.length >= 10 ? '500px' : 'auto'
       "
+      @filter-change="filterTable"
     >
+      <template #empty>
+        <el-empty
+          :description="$t('components.employees_table.empty.description')"
+        >
+        </el-empty>
+      </template>
       <el-table-column
         show-overflow-tooltip
         prop="first_name"
@@ -42,6 +49,22 @@
       <el-table-column
         prop="role"
         width="200px"
+        column-key="role"
+        :filter-multiple="false"
+        :filters="[
+          {
+            text: $t('components.employees_table.roles.admin'),
+            value: 'admin',
+          },
+          {
+            text: $t('components.employees_table.roles.manager'),
+            value: 'manager',
+          },
+          {
+            text: $t('components.employees_table.roles.saller'),
+            value: 'saller',
+          },
+        ]"
         :label="$t('components.employees_table.labels.role')"
       >
         <template #default="scope">
@@ -70,6 +93,26 @@
       <el-table-column
         prop="status"
         width="150"
+        column-key="status"
+        :filter-multiple="false"
+        :filters="[
+          {
+            text: $t('components.employees_table.statuses.working'),
+            value: 'working',
+          },
+          {
+            text: $t('components.employees_table.statuses.leave'),
+            value: 'leave',
+          },
+          {
+            text: $t('components.employees_table.statuses.vacation'),
+            value: 'vacation',
+          },
+          {
+            text: $t('components.employees_table.statuses.medical'),
+            value: 'medical',
+          },
+        ]"
         :label="$t('components.employees_table.labels.status')"
       >
         <template #default="scope">
@@ -140,7 +183,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, toRaw } from "vue";
 
 import {
   ElTable,
@@ -150,6 +193,7 @@ import {
   ElTooltip,
   ElInput,
   ElPagination,
+  ElEmpty,
 } from "element-plus";
 import type { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import { Pencil, Delete, AccountCheck } from "mdue";
@@ -163,6 +207,7 @@ export interface Props {
 
 export interface Emits {
   (_e: "change-page", _value: any): void;
+  (_e: "change-filters", _value: any): void;
 }
 
 const props = withDefaults(defineProps<Props>(), { users: null, total: null });
@@ -194,4 +239,13 @@ const emptyCellFormatter = (row: User, column: TableColumnCtx<User>) => {
 };
 
 const handleCurrentPageChange = (page: number) => emit("change-page", page);
+
+const filterTable = (column: any) => {
+  const [col, value] = Object.entries(column).flat();
+  const rowedValue = toRaw(value);
+
+  if (typeof col === "string" && Array.isArray(rowedValue)) {
+    emit("change-filters", { [col]: rowedValue[0] });
+  }
+};
 </script>
