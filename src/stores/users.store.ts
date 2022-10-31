@@ -2,7 +2,12 @@ import { Ref, ref } from "vue";
 
 import { defineStore } from "pinia";
 
-import { createGetAllUsersRequest, createUserGetInfoRequest } from "@/api";
+import {
+  createDeleteUserRequest,
+  createGetAllUsersRequest,
+  createUpdateConfirmedStatusRequest,
+  createUserGetInfoRequest,
+} from "@/api";
 import { User } from "@/config/app/types";
 
 export const useUsersStore = defineStore("users", () => {
@@ -26,5 +31,21 @@ export const useUsersStore = defineStore("users", () => {
     }
   };
 
-  return { me, users, totalUsers, filters, getMe, getAllUsers };
+  const deleteUser = async (userId: string) => {
+    await createDeleteUserRequest(userId);
+  };
+
+  const updateConfirmedStatus = async (userId: string) => {
+    await createUpdateConfirmedStatusRequest(userId);
+  };
+  return {
+    me,
+    users,
+    totalUsers,
+    filters,
+    getMe,
+    getAllUsers,
+    deleteUser,
+    updateConfirmedStatus,
+  };
 });
