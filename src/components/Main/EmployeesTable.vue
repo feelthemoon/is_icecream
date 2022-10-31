@@ -247,8 +247,8 @@ const handleCurrentPageChange = (page: number) => emit("change-page", page);
 const searchUser = (value: string) => {
   const debouncedEmit = useDebounce(emit, 500);
   searchString.value = value;
-  if (value) {
-    debouncedEmit("change-filters", { s: value });
+  if (searchString.value) {
+    debouncedEmit("change-filters", { s: searchString.value });
   } else {
     debouncedEmit("reset-search-filter");
   }
