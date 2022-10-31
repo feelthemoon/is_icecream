@@ -1,6 +1,7 @@
 import type { AxiosResponse } from "axios";
 
 import routes from "@/config/api/routes.api";
+import { LoadingModules } from "@/config/api/types";
 
 import createRequest from "../_base.api";
 
@@ -23,5 +24,27 @@ export const createGetAllUsersRequest = (
       route: routes.users(`all/${page}`),
       params: filters,
     },
-    { needsAuth: true }
+    { needsAuth: true, loadingModule: LoadingModules.TABLE_USERS }
+  );
+
+export const createDeleteUserRequest = (
+  userId: string
+): Promise<AxiosResponse | void> =>
+  createRequest(
+    {
+      method: "DELETE",
+      route: routes.users(userId),
+    },
+    { needsAuth: true, loadingModule: LoadingModules.TABLE_USERS }
+  );
+
+export const createUpdateConfirmedStatusRequest = (
+  userId: string
+): Promise<AxiosResponse | void> =>
+  createRequest(
+    {
+      method: "POST",
+      route: routes.users(userId),
+    },
+    { needsAuth: true, loadingModule: LoadingModules.TABLE_USERS }
   );

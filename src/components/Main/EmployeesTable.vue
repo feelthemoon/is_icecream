@@ -1,6 +1,7 @@
 <template>
   <div class="table-wrapper pb-30px rounded-lg w-full shadow-custom">
     <el-table
+      v-loading="loading"
       style="width: 100%; border-radius: 0.5rem 0.5rem 0 0"
       :data="props.users"
       :height="
@@ -141,7 +142,13 @@
                 placement="top"
                 :content="$t('components.employees_table.tooltips.delete')"
               >
-                <el-button round plain type="danger" :icon="Delete"></el-button>
+                <el-button
+                  round
+                  plain
+                  type="danger"
+                  @click="$emit('delete-employee', scope.row.id)"
+                  :icon="Delete"
+                ></el-button>
               </el-tooltip>
               <el-tooltip
                 effect="dark"
@@ -163,6 +170,7 @@
                 round
                 plain
                 type="success"
+                @click="$emit('update-confirmed-status', scope.row.id)"
                 :icon="AccountCheck"
               ></el-button>
             </el-tooltip>
@@ -178,6 +186,7 @@
         layout="total, prev, pager, next"
         :total="total"
         :page-size="15"
+        :default-current-page="parseInt(currentPage)"
         @current-change="handleCurrentPageChange"
       />
     </div>
@@ -196,6 +205,7 @@ import {
   ElInput,
   ElPagination,
   ElEmpty,
+  vLoading,
 } from "element-plus";
 import type { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import { Pencil, Delete, AccountCheck } from "mdue";
@@ -203,15 +213,20 @@ import { Pencil, Delete, AccountCheck } from "mdue";
 import { User } from "@/config/app/types";
 import { useDebounce } from "@/utils/hooks";
 
+import "element-plus/es/components/loading/style/css";
+
 export interface Props {
   users: User[] | null;
   total: number | null;
+  loading: boolean;
 }
 
 export interface Emits {
   (_e: "change-page", _value: any): void;
   (_e: "change-filters", _value: any): void;
   (_e: "reset-search-filter"): void;
+  (_e: "delete-employee", _value: any): void;
+  (_e: "update-confirmed-status", _value: any): void;
 }
 
 const props = withDefaults(defineProps<Props>(), { users: null, total: null });
@@ -229,20 +244,23 @@ const roleTagTypes = {
   saller: "info",
 };
 
+const currentPage = localStorage.getItem("currentPageUsersTable") || "1";
 const dateFormatter = (row: User) => {
   const date = new Date(row.created_at);
   return `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`;
 };
 const emptyCellFormatter = (row: User, column: TableColumnCtx<User>) => {
-  if (
-    (column.property === "second_name" && !row.second_name) ||
-    (column.property === "middle_name" && !row.middle_name)
-  ) {
+  if (!row[column.property as keyof typeof row]) {
     return "-";
+  } else {
+    return row[column.property as keyof typeof row];
   }
 };
 
-const handleCurrentPageChange = (page: number) => emit("change-page", page);
+const handleCurrentPageChange = (page: number) => {
+  localStorage.setItem("currentPageUsersTable", page.toString());
+  emit("change-page", page);
+};
 
 const searchUser = (value: string) => {
   const debouncedEmit = useDebounce(emit, 500);
