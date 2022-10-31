@@ -128,7 +128,8 @@
       <el-table-column fixed="right" label="Действия" width="200">
         <template #header>
           <el-input
-            v-model.trim="search"
+            :model-value="searchString"
+            @input="searchUser"
             :placeholder="$t('placeholders.employees.search')"
           />
         </template>
@@ -176,6 +177,7 @@
         class="!mb-0 !p-0"
         layout="total, prev, pager, next"
         :total="total"
+        :page-size="15"
         @current-change="handleCurrentPageChange"
       />
     </div>
@@ -199,6 +201,7 @@ import type { TableColumnCtx } from "element-plus/es/components/table/src/table-
 import { Pencil, Delete, AccountCheck } from "mdue";
 
 import { User } from "@/config/app/types";
+import { useDebounce } from "@/utils/hooks";
 
 export interface Props {
   users: User[] | null;
@@ -208,12 +211,13 @@ export interface Props {
 export interface Emits {
   (_e: "change-page", _value: any): void;
   (_e: "change-filters", _value: any): void;
+  (_e: "reset-search-filter"): void;
 }
 
 const props = withDefaults(defineProps<Props>(), { users: null, total: null });
 const emit = defineEmits<Emits>();
 
-const search = ref("");
+const searchString = ref("");
 
 const statusTagTypes = {
   working: "success",
@@ -239,6 +243,16 @@ const emptyCellFormatter = (row: User, column: TableColumnCtx<User>) => {
 };
 
 const handleCurrentPageChange = (page: number) => emit("change-page", page);
+
+const searchUser = (value: string) => {
+  const debouncedEmit = useDebounce(emit, 500);
+  searchString.value = value;
+  if (searchString.value) {
+    debouncedEmit("change-filters", { s: searchString.value });
+  } else {
+    debouncedEmit("reset-search-filter");
+  }
+};
 
 const filterTable = (column: any) => {
   const [col, value] = Object.entries(column).flat();

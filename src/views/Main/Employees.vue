@@ -6,6 +6,7 @@
       :total="store.totalUsers"
       @change-page="loadNextPage"
       @change-filters="filterTable"
+      @reset-search-filter="resetSearch"
     />
   </div>
 </template>
@@ -25,6 +26,15 @@ const loadNextPage = async (page: number) => {
 const filterTable = async (filter: { [key: string]: any }) => {
   store.$patch((state) => {
     state.filters = { ...state.filters, ...filter };
+  });
+  await store.getAllUsers();
+};
+
+const resetSearch = async () => {
+  store.$patch((state) => {
+    if (state.filters) {
+      delete state.filters["s"];
+    }
   });
   await store.getAllUsers();
 };
