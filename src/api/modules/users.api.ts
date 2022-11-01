@@ -43,7 +43,7 @@ export const createUpdateConfirmedStatusRequest = (
 ): Promise<AxiosResponse | void> =>
   createRequest(
     {
-      method: "POST",
+      method: "PATCH",
       route: routes.users(userId),
     },
     { needsAuth: true, loadingModule: LoadingModules.TABLE_USERS }
