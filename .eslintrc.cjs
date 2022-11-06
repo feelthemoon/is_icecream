@@ -22,6 +22,7 @@ module.exports = {
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "error" : "warn",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "warn",
+    "no-prototype-builtins": "off",
     "import/order": [
       "error",
       {
@@ -41,6 +42,7 @@ module.exports = {
         },
       },
     ],
+    "vue/multi-word-component-names": "off",
   },
   settings: {
     "import/resolver": {
