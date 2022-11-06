@@ -144,34 +144,34 @@ const { t } = useI18n();
 const userRoles = [
   {
     value: UserRoles.ADMIN,
-    label: "Администратор",
+    label: t("components.employees_table.roles.admin"),
   },
   {
     value: UserRoles.MANAGER,
-    label: "Менеджер",
+    label: t("components.employees_table.roles.manager"),
   },
   {
     value: UserRoles.SALLER,
-    label: "Продавец",
+    label: t("components.employees_table.roles.saller"),
   },
 ];
 
 const workingStatus = [
   {
     value: WorkingStatus.LEAVE,
-    label: "Отсутствует",
+    label: t("components.employees_table.statuses.leave"),
   },
   {
     value: WorkingStatus.MEDICAL,
-    label: "На больничном",
+    label: t("components.employees_table.statuses.medical"),
   },
   {
     value: WorkingStatus.VACATION,
-    label: "В отпуске",
+    label: t("components.employees_table.statuses.vacation"),
   },
   {
     value: WorkingStatus.WORKING,
-    label: "Работает",
+    label: t("components.employees_table.statuses.working"),
   },
 ];
 
