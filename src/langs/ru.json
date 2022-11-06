@@ -40,7 +40,14 @@
   "validation": {
     "invalid_email": "Некорректный email",
     "required_field": "Это поле обязательно",
-    "min_length": "Минимальная длина {field} - {length} символа(-ов)"
+    "min_length": "Минимальная длина {field} - {length} символа(-ов)",
+    "invalid_int": "Поле должно быть целым числом",
+    "fields": {
+      "first_name": "имени",
+      "second_name": "фамилии",
+      "middle_name": "отчества",
+      "salary": "зарплата"
+    }
   },
   "components": {
     "sidebar": {
@@ -87,6 +94,9 @@
         "description": "Ничего не найдено",
         "reset_filters": "Сбросить фильтры"
       }
+    },
+    "edit_dialog": {
+      "button_text": "Редактировать"
     }
   }
 }

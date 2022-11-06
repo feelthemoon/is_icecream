@@ -1,6 +1,15 @@
 <template>
   <div class="flex flex-col items-center justify-center">
     <h1 class="text-3xl mb-20px font-700">{{ $t("pages.employees.title") }}</h1>
+    <EditUserDialog
+      v-if="store.userById"
+      :is-visible="isEditDialogVisible"
+      :user="store.userById"
+      :api-error="editEmailError?.message"
+      :is-loading="loadingByName(LoadingModules.EDIT_DIALOG)"
+      @closed="closeEditDialog"
+      @edited="editUser"
+    ></EditUserDialog>
     <EmployeesTable
       :users="store.users"
       :total="store.totalUsers"
@@ -10,19 +19,27 @@
       @reset-search-filter="resetSearch"
       @delete-employee="deleteEmployee"
       @update-confirmed-status="updateConfirmedStatus"
+      @open-edit-dialog="openEditDialog"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from "vue";
+
+import EditUserDialog from "@/components/Main/Dialogs/EditUserDialog.vue";
 import EmployeesTable from "@/components/Main/EmployeesTable.vue";
-import { LoadingModules } from "@/config/api/types";
+import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
 import { useRootStore, useUsersStore } from "@/stores";
 
 let currentPage = localStorage.getItem("currentPageUsersTable") || "1";
+const isEditDialogVisible = ref(false);
 
 const store = useUsersStore();
-const { loadingByName } = useRootStore();
+const { loadingByName, errorByType } = useRootStore();
+const editEmailError = computed(() =>
+  errorByType("invalid_data_email", ErrorNamespaces.EDIT_DIALOG)
+);
 
 await store.getAllUsers(parseInt(currentPage));
 
@@ -55,5 +72,25 @@ const deleteEmployee = async (userId: string) => {
 const updateConfirmedStatus = async (userId: string) => {
   await store.updateConfirmedStatus(userId);
   await store.getAllUsers(parseInt(currentPage));
+};
+
+const openEditDialog = async (userId: string) => {
+  await store.getUserById(userId);
+  isEditDialogVisible.value = true;
+};
+
+const closeEditDialog = () => {
+  isEditDialogVisible.value = false;
+  store.$patch({
+    userById: null,
+  });
+};
+
+const editUser = async (editedUser: { [key: string]: any }) => {
+  await store.editUserById(editedUser);
+  if (!editEmailError.value) {
+    closeEditDialog();
+    await store.getAllUsers(parseInt(currentPage));
+  }
 };
 </script>

@@ -155,7 +155,12 @@
                 placement="top"
                 :content="$t('components.employees_table.tooltips.edit')"
               >
-                <el-button round plain :icon="Pencil"></el-button>
+                <el-button
+                  round
+                  plain
+                  :icon="Pencil"
+                  @click="emit('open-edit-dialog', scope.row.id)"
+                ></el-button>
               </el-tooltip>
             </div>
             <el-tooltip
@@ -227,6 +232,7 @@ export interface Emits {
   (_e: "reset-search-filter"): void;
   (_e: "delete-employee", _value: any): void;
   (_e: "update-confirmed-status", _value: any): void;
+  (_e: "open-edit-dialog", _value: any): void;
 }
 
 const props = withDefaults(defineProps<Props>(), { users: null, total: null });

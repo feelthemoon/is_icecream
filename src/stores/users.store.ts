@@ -4,7 +4,9 @@ import { defineStore } from "pinia";
 
 import {
   createDeleteUserRequest,
+  createEditUserRequest,
   createGetAllUsersRequest,
+  createGetUserByIdRequest,
   createUpdateConfirmedStatusRequest,
   createUserGetInfoRequest,
 } from "@/api";
@@ -15,6 +17,7 @@ export const useUsersStore = defineStore("users", () => {
   const users: Ref<User[] | null> = ref(null);
   const totalUsers: Ref<number | null> = ref(null);
   const filters: Ref<{ [key: string]: any } | undefined> = ref();
+  const userById: Ref<User | null> = ref(null);
 
   const getMe = async () => {
     const response = await createUserGetInfoRequest();
@@ -38,14 +41,31 @@ export const useUsersStore = defineStore("users", () => {
   const updateConfirmedStatus = async (userId: string) => {
     await createUpdateConfirmedStatusRequest(userId);
   };
+
+  const getUserById = async (userId: string) => {
+    const response = await createGetUserByIdRequest(userId);
+    if (response?.data) {
+      userById.value = response.data;
+    }
+  };
+
+  const editUserById = async (editedData: { [key: string]: any }) => {
+    if (userById.value) {
+      await createEditUserRequest(userById.value.id, editedData);
+    }
+  };
+
   return {
     me,
     users,
     totalUsers,
     filters,
+    userById,
     getMe,
     getAllUsers,
     deleteUser,
     updateConfirmedStatus,
+    getUserById,
+    editUserById,
   };
 });
