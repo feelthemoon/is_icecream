@@ -1,0 +1,102 @@
+{
+  "placeholders": {
+    "signin": {
+      "email": "Введите свой email",
+      "password": "Введите свой пароль"
+    },
+    "signup": {
+      "email": "Введите свой email",
+      "password": "Придумайте пароль",
+      "name": "Введите свое имя"
+    },
+    "employees": {
+      "search": "ФИО/email сотрудника"
+    }
+  },
+  "pages": {
+    "signin": {
+      "form": {
+        "buttonText": "Войти",
+        "linkRecoverText": "Забыли пароль?"
+      },
+      "title": "Войти в свой аккаунт",
+      "linkTitle": "Нет аккаунта?"
+    },
+    "signup": {
+      "form": {
+        "buttonText": "Зарегистрироваться"
+      },
+      "title": "Создать новый аккаунт",
+      "linkTitle": "Уже есть аккаунт?"
+    },
+    "home": {
+      "title": "Добро пожаловать в информационную систему управления сетью киосков мороженого",
+      "text": "Чтобы начать работу, выберите нужный пункт из меню слева"
+    },
+    "employees": {
+      "title": "Сотрудники торговой сети"
+    }
+  },
+  "validation": {
+    "invalid_email": "Некорректный email",
+    "required_field": "Это поле обязательно",
+    "min_length": "Минимальная длина {field} - {length} символа(-ов)",
+    "invalid_int": "Поле должно быть целым числом",
+    "fields": {
+      "first_name": "имени",
+      "second_name": "фамилии",
+      "middle_name": "отчества",
+      "salary": "зарплата"
+    }
+  },
+  "components": {
+    "sidebar": {
+      "links_titles": {
+        "employees_title": "Сотрудники",
+        "notifications_title": "Уведомления",
+        "stalls_title": "Точки продажи",
+        "settings_title": "Настройки",
+        "statistics_title": "Статистика",
+        "supplies_title": "Поставки",
+        "reports_title": "Отчеты"
+      },
+      "logout_button_title": "Выход"
+    },
+    "employees_table": {
+      "tooltips": {
+        "delete": "Удалить",
+        "edit": "Редактировать",
+        "confirm_registration": "Подтвердить регистрацию"
+      },
+      "labels": {
+        "first_name": "Имя",
+        "second_name": "Фамилия",
+        "middle_name": "Отчество",
+        "email": "Email",
+        "salary": "Зарплата",
+        "role": "Должность",
+        "stall_name": "Точка продажи",
+        "created_at": "Добавлен",
+        "status": "Статус"
+      },
+      "statuses": {
+        "working": "Работает",
+        "leave": "Отсутствует",
+        "vacation": "В отпуске",
+        "medical": "На больничном"
+      },
+      "roles": {
+        "saller": "Продавец",
+        "manager": "Менеджер",
+        "admin": "Администратор"
+      },
+      "empty": {
+        "description": "Ничего не найдено",
+        "reset_filters": "Сбросить фильтры"
+      }
+    },
+    "edit_dialog": {
+      "button_text": "Редактировать"
+    }
+  }
+}

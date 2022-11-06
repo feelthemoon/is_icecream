@@ -16,8 +16,10 @@ process.env.PUBLIC = app.isPackaged
 
 import { release } from "os";
 import { join } from "path";
+import * as util from "util";
 
 import { app, BrowserWindow, shell, ipcMain, screen } from "electron";
+import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith("6.1")) app.disableHardwareAcceleration();
@@ -45,17 +47,14 @@ async function createWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
   win = new BrowserWindow({
-    title: "Main window",
+    title: "Easy Icecream",
     icon: join(process.env.PUBLIC, "favicon.ico"),
     minWidth: 800,
-    minHeight: 600,
+    minHeight: 770,
     width,
     height,
     webPreferences: {
       preload,
-      // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
-      // Consider using contextBridge.exposeInMainWorld
-      // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -66,9 +65,28 @@ async function createWindow() {
   } else {
     win.loadURL(url);
     win.webContents.openDevTools();
-    // Open devTool if the app is not packaged
   }
 
+  const cookies = win.webContents.session.cookies;
+  cookies.on("changed", function (_event, cookie, _cause, removed) {
+    if (cookie.session && !removed) {
+      const url = util.format(
+        "%s://%s%s",
+        !cookie.httpOnly && cookie.secure ? "https" : "http",
+        cookie.domain,
+        cookie.path
+      );
+
+      cookies.set({
+        url: url,
+        name: cookie.name,
+        value: cookie.value,
+        secure: cookie.secure,
+        httpOnly: cookie.httpOnly,
+        expirationDate: new Date().setDate(new Date().getDate() + 14),
+      });
+    }
+  });
   // Test actively push message to the Electron-Renderer
   win.webContents.on("did-finish-load", () => {
     win?.webContents.send("main-process-message", new Date().toLocaleString());
@@ -81,7 +99,22 @@ async function createWindow() {
   });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  if (process.env.NODE_ENV !== "production") {
+    installExtension(VUEJS3_DEVTOOLS, {
+      loadExtensionOptions: { allowFileAccess: true },
+    })
+      .catch((error) => {
+        //eslint-disable-next-line no-console
+        console.log("An error occurred: ", error);
+      })
+      .finally(() => {
+        createWindow();
+      });
+  } else {
+    createWindow();
+  }
+});
 
 app.on("window-all-closed", () => {
   win = null;
