@@ -1,3 +1,6 @@
+import { UserRoles } from "./UserRoles.type";
+import { WorkingStatus } from "./WorkingStatus.type";
+
 export interface User {
   id: string;
   email: string;
@@ -7,6 +10,8 @@ export interface User {
   avatar: string;
   confirmed: boolean;
   refresh_hash: string;
-  role: string;
+  role: UserRoles;
+  salary: number;
+  status: WorkingStatus;
   created_at: Date;
 }

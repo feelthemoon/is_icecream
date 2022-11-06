@@ -7,15 +7,16 @@ import {
   minLength,
   sameAs,
   maxLength,
+  integer,
 } from "@vuelidate/validators";
 
-type SimpleValidators = "emailValidator" | "required";
-type FunctionalValidators = {
+export type SimpleValidators = "emailValidator" | "required" | "integer";
+export type FunctionalValidators = {
   type: "minLength" | "sameAs" | "maxLength";
   validatorValue: any;
 };
 
-interface ValidationOptions {
+export interface ValidationOptions {
   field: string;
   validators: Array<SimpleValidators | FunctionalValidators>;
   validationMessage: string;
@@ -24,6 +25,7 @@ interface ValidationOptions {
 const vuelidateValidators = {
   emailValidator,
   required,
+  integer,
   minLength,
   sameAs,
   maxLength,
@@ -36,7 +38,7 @@ const vuelidateValidators = {
  */
 
 const isSimpleValidator = (validator: any): validator is SimpleValidators => {
-  return ["emailValidator", "required"].includes(validator);
+  return ["emailValidator", "required", "integer"].includes(validator);
 };
 
 export const useForm = (
@@ -95,9 +97,11 @@ export const useForm = (
    */
   const createValidationMessage = (fieldName: string) => {
     return computed(() => {
-      if (v$.value[fieldName].$dirty && v$.value[fieldName].$invalid) {
-        return validationOptions.find((option) => option.field === fieldName)
-          ?.validationMessage;
+      if (v$.value[fieldName]?.$dirty && v$.value[fieldName]?.$invalid) {
+        return (
+          validationOptions.find((option) => option.field === fieldName)
+            ?.validationMessage ?? ""
+        );
       }
       return "";
     });
