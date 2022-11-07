@@ -27,8 +27,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-import EditUserDialog from "@/components/Main/Dialogs/EditUserDialog.vue";
-import EmployeesTable from "@/components/Main/EmployeesTable.vue";
+import { EditUserDialog, EmployeesTable } from "@/components";
 import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
 import { useRootStore, useUsersStore } from "@/stores";
 
