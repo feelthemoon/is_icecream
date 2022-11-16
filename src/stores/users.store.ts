@@ -1,4 +1,4 @@
-import { Ref, ref } from "vue";
+import { computed, Ref, ref } from "vue";
 
 import { defineStore } from "pinia";
 
@@ -10,7 +10,7 @@ import {
   createUpdateConfirmedStatusRequest,
   createUserGetInfoRequest,
 } from "@/api";
-import { User } from "@/config/app/types";
+import { User, UserRoles } from "@/config/app/types";
 
 export const useUsersStore = defineStore("users", () => {
   const me: Ref<User | null> = ref(null);
@@ -55,12 +55,15 @@ export const useUsersStore = defineStore("users", () => {
     }
   };
 
+  const isUserAdmin = computed(() => me.value?.role === UserRoles.ADMIN);
+
   return {
     me,
     users,
     totalUsers,
     filters,
     userById,
+    isUserAdmin,
     getMe,
     getAllUsers,
     deleteUser,

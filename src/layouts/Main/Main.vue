@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper flex space-between w-full h-full">
+  <div class="wrapper flex justify-between w-full h-full">
     <Sidebar :router-links="sidebarLinks" />
     <router-view
       v-if="canLoadCurrentPage"
