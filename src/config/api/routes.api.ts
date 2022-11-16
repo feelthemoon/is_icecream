@@ -6,4 +6,7 @@ export default {
   users(route: string) {
     return `/users/${route}`;
   },
+  stalls(route: string) {
+    return `/stalls/${route}`;
+  },
 };

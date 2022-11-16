@@ -11,6 +11,9 @@
     },
     "employees": {
       "search": "ФИО/email сотрудника"
+    },
+    "stalls": {
+      "search": "Название/адрес точки"
     }
   },
   "pages": {
@@ -35,6 +38,9 @@
     },
     "employees": {
       "title": "Сотрудники торговой сети"
+    },
+    "stalls": {
+      "title": "Точки продажи"
     }
   },
   "validation": {
@@ -61,6 +67,11 @@
         "reports_title": "Отчеты"
       },
       "logout_button_title": "Выход"
+    },
+    "common": {
+      "empty": {
+        "description": "Ничего не найдено"
+      }
     },
     "employees_table": {
       "tooltips": {
@@ -89,14 +100,22 @@
         "saller": "Продавец",
         "manager": "Менеджер",
         "admin": "Администратор"
-      },
-      "empty": {
-        "description": "Ничего не найдено",
-        "reset_filters": "Сбросить фильтры"
       }
     },
     "edit_dialog": {
       "button_text": "Редактировать"
+    },
+    "stalls_table": {
+      "labels": {
+        "name": "Название точки",
+        "address": "Адрес",
+        "manager": "Менеджер",
+        "created_at": "Создана",
+        "updated_at": "Обновлена",
+        "employees_count": "Количество сотрудников",
+        "actions": "Действия"
+      },
+      "show_more_button_text": "Подробнее"
     }
   }
 }

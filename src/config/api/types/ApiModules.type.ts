@@ -3,8 +3,9 @@ export enum LoadingModules {
   SIGNUP = "signup",
   COMMON = "common",
   LOGOUT = "logout",
-  TABLE_USERS = "get_users",
+  TABLE_USERS = "table_users",
   EDIT_DIALOG = "edit_dialog",
+  TABLE_STALLS = "table_stalls",
 }
 
 export enum ErrorNamespaces {
