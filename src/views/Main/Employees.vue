@@ -14,6 +14,7 @@
       :users="store.users"
       :total="store.totalUsers"
       :loading="loadingByName(LoadingModules.TABLE_USERS)"
+      :current-page="currentPage"
       @change-page="loadNextPage"
       @change-filters="filterTable"
       @reset-search-filter="resetSearch"
