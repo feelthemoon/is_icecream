@@ -10,10 +10,7 @@
       @filter-change="filterTable"
     >
       <template #empty>
-        <el-empty
-          :description="$t('components.employees_table.empty.description')"
-        >
-        </el-empty>
+        <el-empty :description="$t('components.common.empty.description')" />
       </template>
       <el-table-column
         show-overflow-tooltip
@@ -191,7 +188,7 @@
         layout="total, prev, pager, next"
         :total="total"
         :page-size="15"
-        :default-current-page="parseInt(currentPage)"
+        :default-current-page="parseInt(props.currentPage)"
         @current-change="handleCurrentPageChange"
       />
     </div>
@@ -224,6 +221,7 @@ export interface Props {
   users: User[] | null;
   total: number | null;
   loading: boolean;
+  currentPage: string;
 }
 
 export interface Emits {
@@ -235,7 +233,11 @@ export interface Emits {
   (_e: "open-edit-dialog", _value: any): void;
 }
 
-const props = withDefaults(defineProps<Props>(), { users: null, total: null });
+const props = withDefaults(defineProps<Props>(), {
+  users: null,
+  total: null,
+  currentPage: "1",
+});
 const emit = defineEmits<Emits>();
 
 const searchString = ref("");
@@ -250,7 +252,6 @@ const roleTagTypes = {
   saller: "info",
 };
 
-const currentPage = localStorage.getItem("currentPageUsersTable") || "1";
 const dateFormatter = (row: User) => {
   const date = new Date(row.created_at);
   return `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`;
