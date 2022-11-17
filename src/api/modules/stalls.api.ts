@@ -6,10 +6,15 @@ import { LoadingModules } from "@/config/api/types";
 import createRequest from "../_base.api";
 
 export const createGetAllStallsRequest = (
-  page: number
+  page: number,
+  filters?: { [key: string]: any }
 ): Promise<AxiosResponse | void> =>
   createRequest(
-    { method: "GET", route: routes.stalls(`all/${page}`) },
+    {
+      method: "GET",
+      route: routes.stalls(`all/${page}`),
+      params: filters,
+    },
     {
       needsAuth: true,
       loadingModule: LoadingModules.TABLE_STALLS,

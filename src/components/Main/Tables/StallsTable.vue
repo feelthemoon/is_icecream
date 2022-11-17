@@ -65,8 +65,10 @@
       >
         <template #header>
           <el-input
+            :model-value="searchString"
             :suffix-icon="Magnify"
             :placeholder="$t('placeholders.stalls.search')"
+            @input="searchStall"
           />
         </template>
         <template #default="scope">
@@ -96,6 +98,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+
 import {
   ElTable,
   ElTableColumn,
@@ -106,8 +110,10 @@ import {
   vLoading,
 } from "element-plus";
 import { Magnify } from "mdue";
+import { RouterLink } from "vue-router";
 
 import { Stall, User, UserRoles } from "@/config/app/types";
+import { useDebounce } from "@/utils/hooks";
 
 export interface Props {
   stalls: Stall[] | null;
@@ -118,6 +124,8 @@ export interface Props {
 
 export interface Emits {
   (_e: "change-page", _value: any): void;
+  (_e: "change-filters", _value: any): void;
+  (_e: "reset-search-filter"): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -126,11 +134,22 @@ const props = withDefaults(defineProps<Props>(), {
   currentPage: "1",
   loading: false,
 });
+const searchString = ref("");
 const emit = defineEmits<Emits>();
 
 const dateFormatter = (row: Stall) => {
   const date = new Date(row.created_at);
   return `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`;
+};
+
+const searchStall = (value: string) => {
+  const debouncedEmit = useDebounce(emit, 500);
+  searchString.value = value;
+  if (searchString.value) {
+    debouncedEmit("change-filters", { s: searchString.value });
+  } else {
+    debouncedEmit("reset-search-filter");
+  }
 };
 
 const handleCurrentPageChange = (page: number) => {
