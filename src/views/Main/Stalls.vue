@@ -17,6 +17,8 @@
       :total="store.totalStalls"
       :current-page="currentPage"
       @change-page="loadNextPage"
+      @change-filters="filterTable"
+      @reset-search-filter="resetSearch"
     />
   </div>
 </template>
@@ -40,5 +42,21 @@ await store.getAllStalls(parseInt(currentPage));
 const loadNextPage = async (page: number) => {
   currentPage = page.toString();
   await store.getAllStalls(page);
+};
+
+const filterTable = async (filter: { [key: string]: any }) => {
+  store.$patch((state) => {
+    state.filters = { ...state.filters, ...filter };
+  });
+  await store.getAllStalls(parseInt(currentPage));
+};
+
+const resetSearch = async () => {
+  store.$patch((state) => {
+    if (state.filters) {
+      delete state.filters["s"];
+    }
+  });
+  await store.getAllStalls(parseInt(currentPage));
 };
 </script>
