@@ -14,6 +14,11 @@
     },
     "stalls": {
       "search": "Название/адрес точки"
+    },
+    "create_stall_dialog": {
+      "name": "Название точки",
+      "address": "Адрес",
+      "employees": "Добавьте сотрудников"
     }
   },
   "pages": {
@@ -116,6 +121,10 @@
         "actions": "Действия"
       },
       "show_more_button_text": "Подробнее"
+    },
+    "create_stall_dialog": {
+      "button_text": "Добавить точку",
+      "title": "Создайте новую точку продажи"
     }
   }
 }

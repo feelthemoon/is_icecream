@@ -16,7 +16,7 @@ export const useUsersStore = defineStore("users", () => {
   const me: Ref<User | null> = ref(null);
   const users: Ref<User[] | null> = ref(null);
   const totalUsers: Ref<number | null> = ref(null);
-  const filters: Ref<{ [key: string]: any } | undefined> = ref();
+  const filters: Ref<{ [key: string]: any }> = ref({});
   const userById: Ref<User | null> = ref(null);
 
   const getMe = async () => {

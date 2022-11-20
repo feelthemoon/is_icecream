@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onUnmounted, ref } from "vue";
 
 import { EditUserDialog, EmployeesTable } from "@/components";
 import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
@@ -44,6 +44,7 @@ const editEmailError = computed(() =>
 await store.getAllUsers(parseInt(currentPage));
 
 const loadNextPage = async (page: number) => {
+  localStorage.setItem("currentPageUsersTable", page.toString());
   currentPage = page.toString();
   await store.getAllUsers(page);
 };
@@ -93,4 +94,12 @@ const editUser = async (editedUser: { [key: string]: any }) => {
     await store.getAllUsers(parseInt(currentPage));
   }
 };
+
+onUnmounted(() => {
+  store.$patch((state) => {
+    state.filters = {};
+    state.totalUsers = null;
+    state.users = null;
+  });
+});
 </script>
