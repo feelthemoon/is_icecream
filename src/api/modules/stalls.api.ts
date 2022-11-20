@@ -20,3 +20,15 @@ export const createGetAllStallsRequest = (
       loadingModule: LoadingModules.TABLE_STALLS,
     }
   );
+
+export const createStallRequest = (stall: any): Promise<AxiosResponse | void> =>
+  createRequest(
+    {
+      method: "POST",
+      route: routes.stalls("create"),
+      data: stall,
+    },
+    {
+      needsAuth: true,
+    }
+  );

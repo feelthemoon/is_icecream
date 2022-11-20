@@ -2,7 +2,7 @@ import { Ref, ref } from "vue";
 
 import { defineStore } from "pinia";
 
-import { createGetAllStallsRequest } from "@/api";
+import { createGetAllStallsRequest, createStallRequest } from "@/api";
 import { Stall } from "@/config/app/types";
 
 export const useStallsStore = defineStore("stalls", () => {
@@ -18,10 +18,15 @@ export const useStallsStore = defineStore("stalls", () => {
     }
   };
 
+  const createStall = async (data: any) => {
+    await createStallRequest(data);
+  };
+
   return {
     stalls,
     totalStalls,
     filters,
     getAllStalls,
+    createStall,
   };
 });

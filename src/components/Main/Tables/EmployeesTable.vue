@@ -5,13 +5,22 @@
       style="width: 100%; border-radius: 0.5rem 0.5rem 0 0"
       :data="props.users"
       :height="
-        props.users?.length && props.users.length >= 10 ? '500px' : 'auto'
+        props.users?.length && props.users.length >= 10
+          ? props.tableHeight
+          : 'auto'
       "
       @filter-change="filterTable"
+      @selection-change="emit('selection-change', $event)"
     >
       <template #empty>
         <el-empty :description="$t('components.common.empty.description')" />
       </template>
+      <el-table-column
+        type="selection"
+        width="55px"
+        fixed="left"
+        v-if="props.showSelectionCol"
+      ></el-table-column>
       <el-table-column
         show-overflow-tooltip
         prop="first_name"
@@ -77,10 +86,12 @@
       </el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="stall.name"
+        prop="stall"
         width="250px"
         :label="$t('components.employees_table.labels.stall_name')"
-      ></el-table-column>
+      >
+        <template #default="scope">{{ scope.row.stall?.name || "-" }}</template>
+      </el-table-column>
       <el-table-column
         prop="created_at"
         width="250px"
@@ -131,7 +142,7 @@
             :placeholder="$t('placeholders.employees.search')"
           />
         </template>
-        <template #default="scope">
+        <template #default="scope" v-if="props.showActions">
           <div class="flex justify-center">
             <div class="mr-10px" v-if="scope.row.confirmed">
               <el-tooltip
@@ -220,8 +231,11 @@ import "element-plus/es/components/loading/style/css";
 export interface Props {
   users: User[] | null;
   total: number | null;
-  loading: boolean;
-  currentPage: string;
+  loading?: boolean;
+  currentPage?: string;
+  showSelectionCol?: boolean;
+  tableHeight?: string;
+  showActions?: boolean;
 }
 
 export interface Emits {
@@ -231,12 +245,16 @@ export interface Emits {
   (_e: "delete-employee", _value: any): void;
   (_e: "update-confirmed-status", _value: any): void;
   (_e: "open-edit-dialog", _value: any): void;
+  (_e: "selection-change", _value: any): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   users: null,
   total: null,
   currentPage: "1",
+  showSelectionCol: false,
+  tableHeight: "500px",
+  showActions: true,
 });
 const emit = defineEmits<Emits>();
 
@@ -265,7 +283,6 @@ const emptyCellFormatter = (row: User, column: TableColumnCtx<User>) => {
 };
 
 const handleCurrentPageChange = (page: number) => {
-  localStorage.setItem("currentPageUsersTable", page.toString());
   emit("change-page", page);
 };
 
