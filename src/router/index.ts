@@ -27,7 +27,7 @@ const SignupInfo = () =>
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: { name: "SignupInfo" },
+    redirect: { name: "HomePage" },
   },
   {
     path: "/signin",
