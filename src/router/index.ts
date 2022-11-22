@@ -19,6 +19,10 @@ const EmployeesPage = () =>
   import(/* webpackChunkName: "employees_page" */ "@/views/Main/Employees.vue");
 const StallsPage = () =>
   import(/* webpackChunkName: "stalls_page" */ "@/views/Main/Stalls.vue");
+const SignupInfo = () =>
+  import(
+    /* webpackChunkName: "signup_info_page" */ "@/views/Auth/SuccessRegistration.vue"
+  );
 
 const routes: RouteRecordRaw[] = [
   {
@@ -61,6 +65,11 @@ const routes: RouteRecordRaw[] = [
       layout: "main",
       needsAuth: true,
     },
+  },
+  {
+    path: "/signup-info",
+    name: "SignupInfo",
+    component: SignupInfo,
   },
 ];
 

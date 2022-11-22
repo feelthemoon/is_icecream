@@ -56,6 +56,7 @@ import { computed, reactive } from "vue";
 import { ElInput, ElButton, ElForm, ElFormItem } from "element-plus";
 import { Email, Lock, AccountBox } from "mdue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
 import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
 import { useAuth, useRootStore } from "@/stores";
@@ -69,7 +70,7 @@ const formData = reactive({
 });
 
 const { signup } = useAuth();
-
+const router = useRouter();
 const rootStore = useRootStore();
 
 const { v$, createValidationMessage } = useForm(formData, [
@@ -108,8 +109,16 @@ const emailApiError = computed(() =>
 
 const submitForm = async () => {
   await v$.value.$validate();
+
   if (!v$.value.$invalid) {
     await signup(formData);
+
+    if (
+      !emailApiError.value &&
+      !rootStore.errorByNamespace(ErrorNamespaces.COMMON).length
+    ) {
+      await router.push({ name: "SignupInfo" });
+    }
   }
 };
 </script>
