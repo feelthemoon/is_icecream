@@ -7,6 +7,7 @@ export default defineConfig({
     },
     textColor: {
       error: "#f56c6c",
+      primary: "rgba(59, 130, 246, 1)",
     },
   },
 });

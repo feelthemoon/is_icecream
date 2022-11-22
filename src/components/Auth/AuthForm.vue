@@ -5,7 +5,7 @@
     </h2>
     <component :is="currentFormComponent"></component>
     <router-link
-      class="text-xs text-blue-500 mt-2 inline-block"
+      class="text-xs text-primary mt-2 inline-block"
       :to="props.linkPath"
       >{{ props.linkTitle }}</router-link
     >
