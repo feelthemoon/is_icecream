@@ -40,6 +40,7 @@ import { computed, ref } from "vue";
 
 import { ElButton } from "element-plus";
 import { Plus } from "mdue";
+import { useI18n } from "vue-i18n";
 
 import { CreateStallDialog, StallsTable } from "@/components";
 import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
@@ -50,9 +51,15 @@ let currentPage = localStorage.getItem("currentPageStallsTable") || "1";
 
 const currentUsersTablePage = ref(1);
 
-const { loadingByName, errorByType } = useRootStore();
+const {
+  loadingByName,
+  errorByType,
+  errorByNamespace,
+  createSuccsessNotification,
+} = useRootStore();
 const usersStore = useUsersStore();
 const store = useStallsStore();
+const { t } = useI18n();
 
 const isCreateDialogVisible = ref(false);
 
@@ -132,9 +139,13 @@ const createStall = async (stallData: {
     id,
   }));
   await store.createStall({ ...stallData, employees });
-  if (!apiError.value) {
+  if (!apiError.value && !errorByNamespace(ErrorNamespaces.COMMON).length) {
     closeStallDialog();
     await store.getAllStalls(parseInt(currentPage));
+    createSuccsessNotification({
+      title: t("notifications.success.common.title.success"),
+      message: t("notifications.success.create_stall_success.message"),
+    });
   }
 };
 </script>

@@ -31,6 +31,22 @@ export const useRootStore = defineStore("root", {
 
       this.errors.push(error);
     },
+    createSuccsessNotification({
+      title,
+      message,
+      duration = 2500,
+    }: {
+      title: string;
+      message: string;
+      duration?: number;
+    }) {
+      ElNotification({
+        title,
+        message,
+        duration,
+        type: "success",
+      });
+    },
   },
   getters: {
     errorByType: (state: RootState) => (type: string, namespace: string) => {
