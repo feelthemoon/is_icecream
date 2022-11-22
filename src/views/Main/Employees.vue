@@ -28,6 +28,8 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from "vue";
 
+import { useI18n } from "vue-i18n";
+
 import { EditUserDialog, EmployeesTable } from "@/components";
 import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
 import { useRootStore, useUsersStore } from "@/stores";
@@ -36,7 +38,14 @@ let currentPage = localStorage.getItem("currentPageUsersTable") || "1";
 const isEditDialogVisible = ref(false);
 
 const store = useUsersStore();
-const { loadingByName, errorByType } = useRootStore();
+const {
+  loadingByName,
+  errorByType,
+  errorByNamespace,
+  createSuccsessNotification,
+} = useRootStore();
+const { t } = useI18n();
+
 const editEmailError = computed(() =>
   errorByType("invalid_data_email", ErrorNamespaces.EDIT_DIALOG)
 );
@@ -89,9 +98,16 @@ const closeEditDialog = () => {
 
 const editUser = async (editedUser: { [key: string]: any }) => {
   await store.editUserById(editedUser);
-  if (!editEmailError.value) {
+  if (
+    !editEmailError.value &&
+    !errorByNamespace(ErrorNamespaces.COMMON).length
+  ) {
     closeEditDialog();
     await store.getAllUsers(parseInt(currentPage));
+    createSuccsessNotification({
+      title: t("notifications.success.common.title.success"),
+      message: t("notifications.success.edit_user_success.message"),
+    });
   }
 };
 

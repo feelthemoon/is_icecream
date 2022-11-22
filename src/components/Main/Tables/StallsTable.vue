@@ -25,26 +25,26 @@
       <el-table-column
         show-overflow-tooltip
         prop="name"
-        width="200px"
+        width="250px"
         :label="$t('components.stalls_table.labels.name')"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
         prop="address"
-        width="200px"
+        width="250px"
         :label="$t('components.stalls_table.labels.address')"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
         prop="created_at"
-        width="200px"
+        width="250px"
         :formatter="dateFormatter"
         :label="$t('components.stalls_table.labels.created_at')"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
         prop="updated_at"
-        width="200px"
+        width="250px"
         :formatter="dateFormatter"
         :label="$t('components.stalls_table.labels.updated_at')"
       ></el-table-column>

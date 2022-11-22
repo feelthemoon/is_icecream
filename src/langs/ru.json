@@ -21,6 +21,22 @@
       "employees": "Добавьте сотрудников"
     }
   },
+  "notifications": {
+    "success": {
+      "common": {
+        "title": {
+          "error": "Ошибка",
+          "success": "Успешно"
+        }
+      },
+      "edit_user_success": {
+        "message": "Пользователь успешно отредактирован!"
+      },
+      "create_stall_success": {
+        "message": "Новая точка успешно создана!"
+      }
+    }
+  },
   "pages": {
     "signin": {
       "form": {
