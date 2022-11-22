@@ -12,7 +12,7 @@
       label-position="top"
       @submit.prevent="createStall"
     >
-      <el-form-item class="mb-6" :error="invalidName">
+      <el-form-item class="mb-6" :error="invalidName || apiError">
         <el-input
           v-model="formData.name"
           :placeholder="$t('placeholders.create_stall_dialog.name')"
@@ -68,6 +68,7 @@ export interface Props {
   freeEmployees: User[] | null;
   total: number | null;
   isLoading?: boolean;
+  apiError?: string;
 }
 export interface Emits {
   (_e: "closed"): void;
@@ -83,6 +84,7 @@ const props = withDefaults(defineProps<Props>(), {
   isVisible: false,
   isLoading: false,
   freeEmployees: null,
+  apiError: "",
 });
 
 const formData = reactive({
@@ -130,8 +132,6 @@ const createStall = async () => {
       address: formData.address.trim(),
       employees: formData.employees,
     });
-    resetFormData();
-    v$.value.$reset();
   }
 };
 

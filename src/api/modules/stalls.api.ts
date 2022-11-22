@@ -1,7 +1,7 @@
 import type { AxiosResponse } from "axios";
 
 import routes from "@/config/api/routes.api";
-import { LoadingModules } from "@/config/api/types";
+import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
 
 import createRequest from "../_base.api";
 
@@ -30,5 +30,7 @@ export const createStallRequest = (stall: any): Promise<AxiosResponse | void> =>
     },
     {
       needsAuth: true,
+      errorsNamespace: ErrorNamespaces.CREATE_STALL,
+      loadingModule: LoadingModules.CREATE_STALL,
     }
   );
