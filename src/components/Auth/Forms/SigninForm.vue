@@ -28,13 +28,6 @@
         :placeholder="t('placeholders.signin.password')"
       />
     </el-form-item>
-    <el-form-item class="text-left w-full">
-      <router-link
-        to="/recover-password"
-        class="text-xs text-blue-500 mt-2 inline-block"
-        >{{ $t("pages.signin.form.linkRecoverText") }}</router-link
-      >
-    </el-form-item>
     <el-form-item class="!mb-0">
       <el-button :loading="loading" type="primary" native-type="submit">{{
         t("pages.signin.form.buttonText")

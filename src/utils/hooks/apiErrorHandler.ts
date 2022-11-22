@@ -10,7 +10,7 @@ export const useApiErrorHandler = (
 ) => {
   const rootStore = useRootStore();
 
-  if (error instanceof AxiosError && error.response?.data.message) {
+  if (error instanceof AxiosError && error.response?.data?.message) {
     error.response?.data.message.forEach(
       (err: { type: string; text: string }) => {
         rootStore.patchErrors({
