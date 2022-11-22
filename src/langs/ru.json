@@ -53,11 +53,13 @@
     "required_field": "Это поле обязательно",
     "min_length": "Минимальная длина {field} - {length} символа(-ов)",
     "invalid_int": "Поле должно быть целым числом",
+    "invalid_employees_arr": "У точки должен быть хотя бы 1 менеджер",
     "fields": {
       "first_name": "имени",
       "second_name": "фамилии",
       "middle_name": "отчества",
-      "salary": "зарплата"
+      "salary": "зарплата",
+      "stall_name": "названия точки"
     }
   },
   "components": {

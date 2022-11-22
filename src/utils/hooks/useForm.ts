@@ -10,7 +10,16 @@ import {
   integer,
 } from "@vuelidate/validators";
 
-export type SimpleValidators = "emailValidator" | "required" | "integer";
+import { User, UserRoles } from "@/config/app/types";
+
+const checkEmployeeManagerValidator = (value: User[]) =>
+  value.find((employee) => employee.role === UserRoles.MANAGER);
+
+export type SimpleValidators =
+  | "emailValidator"
+  | "required"
+  | "integer"
+  | "checkEmployeeManagerValidator";
 export type FunctionalValidators = {
   type: "minLength" | "sameAs" | "maxLength";
   validatorValue: any;
@@ -29,6 +38,7 @@ const vuelidateValidators = {
   minLength,
   sameAs,
   maxLength,
+  checkEmployeeManagerValidator,
 };
 
 /**
@@ -38,7 +48,12 @@ const vuelidateValidators = {
  */
 
 const isSimpleValidator = (validator: any): validator is SimpleValidators => {
-  return ["emailValidator", "required", "integer"].includes(validator);
+  return [
+    "emailValidator",
+    "required",
+    "integer",
+    "checkEmployeeManagerValidator",
+  ].includes(validator);
 };
 
 export const useForm = (

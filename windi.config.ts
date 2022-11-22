@@ -5,5 +5,8 @@ export default defineConfig({
     boxShadow: {
       custom: "0 0 10px #409eff",
     },
+    textColor: {
+      error: "#f56c6c",
+    },
   },
 });

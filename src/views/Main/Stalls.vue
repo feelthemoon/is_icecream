@@ -42,6 +42,7 @@ import { Plus } from "mdue";
 
 import { CreateStallDialog, StallsTable } from "@/components";
 import { LoadingModules } from "@/config/api/types";
+import { User } from "@/config/app/types";
 import { useRootStore, useStallsStore, useUsersStore } from "@/stores";
 
 let currentPage = localStorage.getItem("currentPageStallsTable") || "1";
@@ -117,9 +118,13 @@ const closeStallDialog = () => {
   });
 };
 
-const createStall = async (stallData: any) => {
-  const employees = stallData.employees.map((employee: any) => ({
-    id: employee.id,
+const createStall = async (stallData: {
+  name: string;
+  address: string;
+  employees: User[];
+}) => {
+  const employees = stallData.employees.map(({ id }: User) => ({
+    id,
   }));
   await store.createStall({ ...stallData, employees });
   closeStallDialog();
