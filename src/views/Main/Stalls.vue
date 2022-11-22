@@ -16,6 +16,7 @@
       :is-visible="isCreateDialogVisible"
       :free-employees="usersStore.users"
       :total="usersStore.totalUsers"
+      :api-error="apiError?.message"
       @closed="closeStallDialog"
       @load-next-page="loadNextUsersPage"
       @filter-employees="filterUsers"
@@ -35,20 +36,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import { ElButton } from "element-plus";
 import { Plus } from "mdue";
 
 import { CreateStallDialog, StallsTable } from "@/components";
-import { LoadingModules } from "@/config/api/types";
+import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
+import { User } from "@/config/app/types";
 import { useRootStore, useStallsStore, useUsersStore } from "@/stores";
 
 let currentPage = localStorage.getItem("currentPageStallsTable") || "1";
 
 const currentUsersTablePage = ref(1);
 
-const { loadingByName } = useRootStore();
+const { loadingByName, errorByType } = useRootStore();
 const usersStore = useUsersStore();
 const store = useStallsStore();
 
@@ -108,6 +110,10 @@ const openCreateDialog = async () => {
   isCreateDialogVisible.value = true;
 };
 
+const apiError = computed(() =>
+  errorByType("invalid_data_name", ErrorNamespaces.CREATE_STALL)
+);
+
 const closeStallDialog = () => {
   isCreateDialogVisible.value = false;
   usersStore.$patch((state) => {
@@ -117,12 +123,18 @@ const closeStallDialog = () => {
   });
 };
 
-const createStall = async (stallData: any) => {
-  const employees = stallData.employees.map((employee: any) => ({
-    id: employee.id,
+const createStall = async (stallData: {
+  name: string;
+  address: string;
+  employees: User[];
+}) => {
+  const employees = stallData.employees.map(({ id }: User) => ({
+    id,
   }));
   await store.createStall({ ...stallData, employees });
-  closeStallDialog();
-  await store.getAllStalls(parseInt(currentPage));
+  if (!apiError.value) {
+    closeStallDialog();
+    await store.getAllStalls(parseInt(currentPage));
+  }
 };
 </script>

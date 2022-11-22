@@ -6,6 +6,7 @@ export enum LoadingModules {
   TABLE_USERS = "table_users",
   EDIT_DIALOG = "edit_dialog",
   TABLE_STALLS = "table_stalls",
+  CREATE_STALL = "crete_stall",
 }
 
 export enum ErrorNamespaces {
@@ -13,4 +14,5 @@ export enum ErrorNamespaces {
   SIGNUP = "signup",
   COMMON = "common_error",
   EDIT_DIALOG = "edit_dialog",
+  CREATE_STALL = "crete_stall",
 }
