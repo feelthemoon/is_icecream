@@ -1,0 +1,153 @@
+{
+  "placeholders": {
+    "signin": {
+      "email": "Введите свой email",
+      "password": "Введите свой пароль"
+    },
+    "signup": {
+      "email": "Введите свой email",
+      "password": "Придумайте пароль",
+      "name": "Введите свое имя"
+    },
+    "employees": {
+      "search": "ФИО/email сотрудника"
+    },
+    "stalls": {
+      "search": "Название/адрес точки"
+    },
+    "create_stall_dialog": {
+      "name": "Название точки",
+      "address": "Адрес",
+      "employees": "Добавьте сотрудников"
+    }
+  },
+  "notifications": {
+    "success": {
+      "common": {
+        "title": {
+          "error": "Ошибка",
+          "success": "Успешно"
+        }
+      },
+      "edit_user_success": {
+        "message": "Пользователь успешно отредактирован!"
+      },
+      "create_stall_success": {
+        "message": "Новая точка успешно создана!"
+      }
+    }
+  },
+  "pages": {
+    "signin": {
+      "form": {
+        "buttonText": "Войти",
+        "linkRecoverText": "Забыли пароль?"
+      },
+      "title": "Войти в свой аккаунт",
+      "linkTitle": "Нет аккаунта?"
+    },
+    "signup": {
+      "form": {
+        "buttonText": "Зарегистрироваться"
+      },
+      "title": "Создать новый аккаунт",
+      "linkTitle": "Уже есть аккаунт?"
+    },
+    "home": {
+      "title": "Добро пожаловать в информационную систему управления сетью киосков мороженого",
+      "text": "Чтобы начать работу, выберите нужный пункт из меню слева"
+    },
+    "employees": {
+      "title": "Сотрудники торговой сети"
+    },
+    "stalls": {
+      "title": "Точки продажи"
+    },
+    "signup_info": {
+      "title": "Регистрация прошла успешно!",
+      "subtitle": "Пожалуйста, дождитесь подтверждения вашего аккаунта от администратора",
+      "button_text": "Назад"
+    }
+  },
+  "validation": {
+    "invalid_email": "Некорректный email",
+    "required_field": "Это поле обязательно",
+    "min_length": "Минимальная длина {field} - {length} символа(-ов)",
+    "invalid_int": "Поле должно быть целым числом",
+    "invalid_employees_arr": "У точки должен быть хотя бы 1 менеджер",
+    "fields": {
+      "first_name": "имени",
+      "second_name": "фамилии",
+      "middle_name": "отчества",
+      "salary": "зарплата",
+      "stall_name": "названия точки"
+    }
+  },
+  "components": {
+    "sidebar": {
+      "links_titles": {
+        "employees_title": "Сотрудники",
+        "notifications_title": "Уведомления",
+        "stalls_title": "Точки продажи",
+        "settings_title": "Настройки",
+        "statistics_title": "Статистика",
+        "supplies_title": "Поставки",
+        "reports_title": "Отчеты"
+      },
+      "logout_button_title": "Выход"
+    },
+    "common": {
+      "empty": {
+        "description": "Ничего не найдено"
+      }
+    },
+    "employees_table": {
+      "tooltips": {
+        "delete": "Удалить",
+        "edit": "Редактировать",
+        "confirm_registration": "Подтвердить регистрацию"
+      },
+      "labels": {
+        "first_name": "Имя",
+        "second_name": "Фамилия",
+        "middle_name": "Отчество",
+        "email": "Email",
+        "salary": "Зарплата",
+        "role": "Должность",
+        "stall_name": "Точка продажи",
+        "created_at": "Добавлен",
+        "status": "Статус"
+      },
+      "statuses": {
+        "working": "Работает",
+        "leave": "Отсутствует",
+        "vacation": "В отпуске",
+        "medical": "На больничном"
+      },
+      "roles": {
+        "saller": "Продавец",
+        "manager": "Менеджер",
+        "admin": "Администратор"
+      }
+    },
+    "edit_dialog": {
+      "button_text": "Редактировать"
+    },
+    "stalls_table": {
+      "labels": {
+        "name": "Название точки",
+        "address": "Адрес",
+        "manager": "Менеджер",
+        "created_at": "Создана",
+        "updated_at": "Обновлена",
+        "employees_count": "Количество сотрудников",
+        "actions": "Действия"
+      },
+      "show_more_button_text": "Подробнее"
+    },
+    "create_stall_dialog": {
+      "button_text": "Добавить точку",
+      "title": "Создайте новую точку продажи"
+    }
+  }
+}
