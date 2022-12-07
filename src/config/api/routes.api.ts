@@ -3,8 +3,8 @@ export default {
   signup: "/signup",
   refreshAccessToken: "/refresh",
   logout: "/logout",
-  users(route: string) {
-    return `/users/${route}`;
+  employees(route: string) {
+    return `/employees/${route}`;
   },
   stalls(route: string) {
     return `/stalls/${route}`;

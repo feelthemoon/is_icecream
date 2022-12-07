@@ -3,9 +3,9 @@
     <el-table
       v-loading="loading"
       style="width: 100%; border-radius: 0.5rem 0.5rem 0 0"
-      :data="props.users"
+      :data="props.employees"
       :height="
-        props.users?.length && props.users.length >= 10
+        props.employees?.length && props.employees.length >= 10
           ? props.tableHeight
           : 'auto'
       "
@@ -229,7 +229,7 @@ import { useDebounce } from "@/utils/hooks";
 import "element-plus/es/components/loading/style/css";
 
 export interface Props {
-  users: User[] | null;
+  employees: User[] | null;
   total: number | null;
   loading?: boolean;
   currentPage?: string;
@@ -249,7 +249,7 @@ export interface Emits {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  users: null,
+  employees: null,
   total: null,
   currentPage: "1",
   showSelectionCol: false,

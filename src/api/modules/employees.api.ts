@@ -5,69 +5,69 @@ import { ErrorNamespaces, LoadingModules } from "@/config/api/types";
 
 import createRequest from "../_base.api";
 
-export const createUserGetInfoRequest = (): Promise<AxiosResponse | void> =>
+export const createEmployeeGetInfoRequest = (): Promise<AxiosResponse | void> =>
   createRequest(
     {
       method: "GET",
-      route: routes.users("me"),
+      route: routes.employees("me"),
     },
     { needsAuth: true }
   );
 
-export const createGetAllUsersRequest = (
+export const createGetAllEmployeesRequest = (
   page: number,
   filters?: { [key: string]: any }
 ): Promise<AxiosResponse | void> =>
   createRequest(
     {
       method: "GET",
-      route: routes.users(`all/${page}`),
+      route: routes.employees(`all/${page}`),
       params: filters,
     },
     { needsAuth: true, loadingModule: LoadingModules.TABLE_USERS }
   );
 
-export const createDeleteUserRequest = (
-  userId: string
+export const createDeleteEmployeeRequest = (
+  employeeId: string
 ): Promise<AxiosResponse | void> =>
   createRequest(
     {
       method: "DELETE",
-      route: routes.users(userId),
+      route: routes.employees(employeeId),
     },
     { needsAuth: true, loadingModule: LoadingModules.TABLE_USERS }
   );
 
 export const createUpdateConfirmedStatusRequest = (
-  userId: string
+  employeeId: string
 ): Promise<AxiosResponse | void> =>
   createRequest(
     {
       method: "PATCH",
-      route: routes.users(userId),
+      route: routes.employees(employeeId),
     },
     { needsAuth: true, loadingModule: LoadingModules.TABLE_USERS }
   );
 
-export const createGetUserByIdRequest = (
-  userId: string
+export const createGetEmployeeByIdRequest = (
+  employeeId: string
 ): Promise<AxiosResponse | void> =>
   createRequest(
     {
       method: "GET",
-      route: routes.users(userId),
+      route: routes.employees(employeeId),
     },
     { needsAuth: true, loadingModule: LoadingModules.TABLE_USERS }
   );
 
-export const createEditUserRequest = (
-  userId: string,
+export const createEditEmployeeRequest = (
+  employeeId: string,
   editData: { [key: string]: any }
 ): Promise<AxiosResponse | void> =>
   createRequest(
     {
       method: "PATCH",
-      route: routes.users(`edit/${userId}`),
+      route: routes.employees(`edit/${employeeId}`),
       data: editData,
     },
     {
