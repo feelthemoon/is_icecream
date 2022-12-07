@@ -31,7 +31,7 @@
         <EmployeesTable
           show-selection-col
           table-height="200px"
-          :users="props.freeEmployees"
+          :employees="props.freeEmployees"
           :total="props.total"
           :show-actions="false"
           @change-page="emit('load-next-page', $event)"

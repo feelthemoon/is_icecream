@@ -3,7 +3,7 @@
     <div class="flex justify-between items w-full mb-20px items-center">
       <h1 class="text-3xl font-700">{{ $t("pages.stalls.title") }}</h1>
       <ElButton
-        v-if="usersStore.isUserAdmin"
+        v-if="usersStore.isEmployeeAdmin"
         circle
         type="primary"
         size="large"
@@ -14,8 +14,8 @@
     </div>
     <CreateStallDialog
       :is-visible="isCreateDialogVisible"
-      :free-employees="usersStore.users"
-      :total="usersStore.totalUsers"
+      :free-employees="usersStore.employees"
+      :total="usersStore.totalEmployees"
       :api-error="apiError?.message"
       @closed="closeStallDialog"
       @load-next-page="loadNextUsersPage"
@@ -73,7 +73,7 @@ const loadNextPage = async (page: number) => {
 const loadNextUsersPage = async (page: any) => {
   if (isCreateDialogVisible.value) {
     currentUsersTablePage.value = page;
-    await usersStore.getAllUsers(page);
+    await usersStore.getAllEmployees(page);
   }
 };
 
@@ -81,7 +81,7 @@ const filterUsers = async (filters: { [key: string]: any }) => {
   usersStore.$patch((state) => {
     state.filters = { ...state.filters, ...filters };
   });
-  await usersStore.getAllUsers(currentUsersTablePage.value);
+  await usersStore.getAllEmployees(currentUsersTablePage.value);
 };
 
 const filterTable = async (filter: { [key: string]: any }) => {
@@ -106,14 +106,14 @@ const resetUsersSearch = async () => {
       delete state.filters["s"];
     }
   });
-  await usersStore.getAllUsers(currentUsersTablePage.value);
+  await usersStore.getAllEmployees(currentUsersTablePage.value);
 };
 
 const openCreateDialog = async () => {
   usersStore.$patch((state) => {
     state.filters = { stall: "null" };
   });
-  await usersStore.getAllUsers();
+  await usersStore.getAllEmployees();
   isCreateDialogVisible.value = true;
 };
 
@@ -125,8 +125,8 @@ const closeStallDialog = () => {
   isCreateDialogVisible.value = false;
   usersStore.$patch((state) => {
     state.filters = {};
-    state.totalUsers = null;
-    state.users = null;
+    state.totalEmployees = null;
+    state.employees = null;
   });
 };
 
