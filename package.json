@@ -29,7 +29,7 @@
     "unplugin-element-plus": "^0.4.1",
     "vite": "^3.0.8",
     "vite-plugin-electron": "^0.9.3",
-    "vue": "^3.2.37",
+    "vue": "^3.2.47",
     "vue-tsc": "^0.40.1"
   },
   "debug": {
